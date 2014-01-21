@@ -1,3 +1,6 @@
+name: japesinator.github.io
+description: Things I find interesting
+url: http://japesinator.github.io
 safe: true
 lsi: false
 pygments: true

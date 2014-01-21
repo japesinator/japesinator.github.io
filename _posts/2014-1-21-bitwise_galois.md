@@ -11,18 +11,18 @@ Recently, I began working on implementing AES in python.  My code is largely bas
 
 
 {% highlight python linenos %}
-    def galois_multiplication(a, b):
-      p = 0
-      for i in range(8):
-        if b & 1:
-          p ^= a
-        hi_bit_set = a & 0x80
-        a <<= 1
-        a &= 0xFF
-        if hi_bit_set:
-          a ^= 0x1b
-        b >>= 1
-      return p
+def galois_multiplication(a, b):
+  p = 0
+  for i in range(8):
+    if b & 1:
+      p ^= a
+    hi_bit_set = a & 0x80
+    a <<= 1
+    a &= 0xFF
+    if hi_bit_set:
+      a ^= 0x1b
+    b >>= 1
+  return p
 {% endhighlight %}
 
 
@@ -55,22 +55,30 @@ After the second conditional has been evaluated, we shift b to the right one bit
 Based on my analysis of the function, I was able to rewrite it and comment it to what I found a much easier to understand, if still somewhat cryptic functions, seen below.
 
 {% highlight python linenos %}
-    def galois_multiplication(first_number, second_number):
-      product = 0
-      for i in range(8):                           # Repeat the indented block below eight times
-        if (second_number % 2) != 0:                           # If b is odd,
-          product = product ^ first_number         # xor the product with first_number
-        if first_number >= 128:
-          high_bit_set = True                      # Remember if a was greater than or equal to 128 here
-        first_number = 2 * first_number            # double the first number
-        if first_number >= 256:                    # This conditional essentially sets the first number equal to itself modulo 256
-          first_number = first_number - 256
-        if high-bit-set == True:                   # If the first number was >= 128, xor it with 27
-          first_number = first_number ^ 0b00011011
-        if second_number % 2 == 1:                 # These three lines are the same as b >>=1
-          second_number = second_number - 1
-        second_number = second_number / 2
-      return product
+def galois_multiplication(first_number, second_number):
+  product = 0
+  for i in range(8):
+  # Repeat the indented block below eight times
+    if (second_number % 2) != 0:
+    # If b is odd,
+      product = product ^ f
+      # xor the product with first_number
+    if first_number >= 128:
+      high_bit_set = T
+      # Remember if a was greater than or equal to 128 here
+    first_number = 2 * f
+    # double the first number
+    if first_number >= 256:
+    # This conditional essentially sets the first number equal to itself modulo 256
+      first_number = first_number - 256
+    if high-bit-set == True:
+    # If the first number was >= 128, xor it with 27
+      first_number = first_number ^ 0b00011011
+    # The three lines below are the same as b >>=1
+    if second_number % 2 == 1:
+      second_number = second_number - 1
+    second_number = second_number / 2
+  return product
 {% endhighlight %}
 
 
@@ -85,8 +93,8 @@ Looking at our definition, we already know how to perform modulo 256 addition, b
 In AES's finite field, numbers are expressed as binary, so that base is two.  The irreducible polynomial that defines the field is actually 283, or 0b100011011.  Notably, 0b100011011 % 256 (or 0b10000000) = 0b11011 (or 27) which at least partially explains where the mysterious constant in line 10 comes from.  Thus, when we want to multiply in a Galois field, we can simply multiply our two numbers like usual and then take the result modulo 283.  This certainly makes it clearer exactly what we are doing, and even allows us to rewrite our code as:
 
 {% highlight python linenos %}
-    def galois_multiplication(a, b):
-      return ((a * b) % 283)
+def galois_multiplication(a, b):
+  return ((a * b) % 283)
 {% endhighlight %}
 
 

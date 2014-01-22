@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+        <channel>
+                <title>japesblog</title>
+                <description>Things I find interesting</description>
+                <link>http://japesinator.github.io</link>
+                <atom:link href="http://japesinator.github.io/feed.xml" rel="self" type="application/rss+xml" />
+                
+                        <item>
+                                <title>Bitwise Galois Arithmetic</title>
+                                <description>&lt;h1&gt;Bitwise Galois Arithmetic&lt;/h1&gt;
+
+&lt;p&gt;Recently, I began working on implementing AES in python.  My code is largely based off of &lt;a href=&quot;https://code.google.com/p/slowaes/&quot;&gt;SlowAES&lt;/a&gt;, but using much more in-depth comments, more descriptive variable names, and snake case.  I understood most of the code, but there was a function for performing &amp;quot;Galois Multiplication&amp;quot; for column mixing that I was unable to deduce the function of entirely.  It is reproduced below, sans comments.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;galois_multiplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;hi_bit_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x80&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xFF&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hi_bit_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x1b&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A quick wikipedia search for &amp;quot;Galois Multiplication&amp;quot; returned a &lt;a href=&quot;https://en.wikipedia.org/wiki/Finite_field_arithmetic&quot;&gt;page&lt;/a&gt; that seemed to be about the same thing, but not in any way I could relate back to the actual code.  There was no simple English version I could find, so I looked into the &lt;a href=&quot;http://www.samiam.org/galois.html&quot;&gt;link&lt;/a&gt; at the bottom of the page, which seemed to be about the same thing I was looking for.&lt;/p&gt;
+
+&lt;p&gt;Here I found some C code that the code I was looking at was obviously based off of, and a relatively simple explanation of what it did.  Based on that and using my rudimentary knowledge of bitwise operators in python, I was able to line-by-line annotate the code with the purpose of each line.&lt;/p&gt;
+
+&lt;p&gt;To understand line 4, &amp;quot;if b &amp;amp; 1&amp;quot;, we must first understand three things:&lt;/p&gt;
+
+&lt;p&gt;1:  When given a number as a conditional, python evaluates true if that number does not equal 0 and false if it does.&lt;/p&gt;
+
+&lt;p&gt;2:  &amp;amp; represents bitwise and in python&lt;/p&gt;
+
+&lt;p&gt;3:  In python, binary numbers are treated like integers, so 0b1 == 0b01 == 0b001, and therefore n &amp;amp; 0b1 == n &amp;amp; 0b001.&lt;/p&gt;
+
+&lt;p&gt;Hence, the if statement first essentially performs a bitwise and on the binary representation of b and a binary number of equal length consisting of zeroes in all but the least significant place and a one in that place and then checks if the result is not equal to zero.  All this does is executes the code inside the &amp;#39;if&amp;#39; if the least significant bit of b is one.  Simplifying further, we can see that the conditional just checks if b is odd, albeit in a faster and less easily comprehensible way.&lt;/p&gt;
+
+&lt;p&gt;The line inside the if statement is much easier to understand.  In python ^= is similar to += in that a ^= b is the same as a = a ^ b.  ^ is the bitwise xor function, so all that this line does is xors p with a.&lt;/p&gt;
+
+&lt;p&gt;The next line, &amp;quot;hi&lt;em&gt;bit&lt;/em&gt;set = a &amp;amp; 0x80&amp;quot; is again, an application of pythons bitwise and to perform an operation quickly, but in a way that is hard to deduce from the code.  Converting 0x80 to decimal and then to binary we find that 0x80 == 128 == 0b10000000.  Bitwise and of any number with zero is zero, so our output will return 0b10000000 if a has a 1 in the 128&amp;#39;s place and 0 otherwise.  This is important at line 11, which checks whether this bit was set earlier.&lt;/p&gt;
+
+&lt;p&gt;Now that we have checked whether a&amp;#39;s highest bit was set, we can modify it with a &amp;lt;&amp;lt;=1, which simply shifts each bit to the right and adds a zero to the end, or in decimal, multiplies a by 2.&lt;/p&gt;
+
+&lt;p&gt;Line 8 took me a while to understand the purpose of. 0xFF == 0b11111111, and if n is any bit, n &amp;amp; 1 == 1, so at first is looked to me like this line did not even modify a.  However, this is the same trick as used in line 4.  Applying a bitwise and to a number and a string of ones n bits long truncates that number to its least significant n bits.  Line 8 therefore makes sure that a is only 8 bits long after a left bitshift that could make it longer than that.&lt;/p&gt;
+
+&lt;p&gt;In the next line, we use the high-bit-set test we devised before to see if a was &amp;gt;= 128 prior to our bitshift and truncation.  If it was, we xor a with 0x1b. 0x1b == 27 == 0b00011011, which has no easily apparent special properties, and only makes sense in the context of the actual math the function is based upon.&lt;/p&gt;
+
+&lt;p&gt;After the second conditional has been evaluated, we shift b to the right one bit, essentially dropping the least significant bit and then dividing it by two.  We repeat this 8 times, and we have our function.&lt;/p&gt;
+
+&lt;p&gt;Based on my analysis of the function, I was able to rewrite it and comment it to what I found a much easier to understand, if still somewhat cryptic functions, seen below.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;galois_multiplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;product&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Repeat the indented block below eight times&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# If b is odd,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;product&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;product&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;# xor the product with first_number&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;high_bit_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;# Remember if a was greater than or equal to 128 here&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# double the first number&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# This conditional essentially sets the first number equal to itself modulo 256&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;high&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# If the first number was &amp;gt;= 128, xor it with 27&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b00011011&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# The three lines below are the same as b &amp;gt;&amp;gt;=1&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;second_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;product&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;While this is certainly easier to understand from an arithmetic point of view, the overall purpose of the code is still a mystery.  To understand it, we must first understand why it is used.&lt;/p&gt;
+
+&lt;p&gt;Galois arithmetic is a family of functions analogous to standard arithmetic that only takes and returns numbers from a finite field of values.  AES uses Galois arithmetic heavily for reasons that are too complex to explain well in a post of this scale, but which can be poorly summarized by pointing out that they can be counted on to only return certain numbers and aren&amp;#39;t too easy to reverse.&lt;/p&gt;
+
+&lt;p&gt;We might expect that since Galois arithmetic is analogous to our own arithmetic, Galois multiplication is simply repeated Galois addition.  However, since Galois addition of two numbers is actually equivalent to simply bitwise xoring them, and (a ^ b) ^ b == a, Galois-adding two numbers together any number of times can only result in two values.  &lt;a href=&quot;http://www.pclviewer.com/rs2/galois.html&quot;&gt;This website&lt;/a&gt;, offers a fairly good explanation of exactly what Galois field arithmetic is and how to do it, and it provides that multiplication is the &amp;quot;Antilog of the modulus 256 sum of their logs.&amp;quot;  This, while it certainly does not make our function clear, offers at least a better explanation than we have seen so far.&lt;/p&gt;
+
+&lt;p&gt;Looking at our definition, we already know how to perform modulo 256 addition, but logs and antilogs are both more complex in a Galois field than they are in basic arithmetic.  In standard arithmetic, if log base a of b equals c, c a to the c power equals b.  In other words, logs are the inverse of exponentiation.  If we try to directly translate this to a Galois field however, we encounter a problem in that exponentiation is repeated multiplication, and multiplication is the function we&amp;#39;re trying to create in the first place.  Looking for less circular definitions, we find on the aforementioned Wikipedia page, that multiplication in a finite field is just multiplication modulo the polynomial that defines the field.  This makes much more sense if we are able to look at numbers written in a base n system as polynomials.  For instance, if I write the number 1365, I have written the equivalent of the polynomial 1x^3 + 3x^2 + 6x^2 + 5x^0 where x is the base of the number system I am writing in.&lt;/p&gt;
+
+&lt;p&gt;In AES&amp;#39;s finite field, numbers are expressed as binary, so that base is two.  The irreducible polynomial that defines the field is actually 283, or 0b100011011.  Notably, 0b100011011 % 256 (or 0b10000000) = 0b11011 (or 27) which at least partially explains where the mysterious constant in line 10 comes from.  Thus, when we want to multiply in a Galois field, we can simply multiply our two numbers like usual and then take the result modulo 283.  This certainly makes it clearer exactly what we are doing, and even allows us to rewrite our code as:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;galois_multiplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;283&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is definitely an improvement from our initial algorithm in terms of legibility, but it is still hard to understand how they do the same thing.  Notably, in our original algorithm, p is only modified by xoring it with a.  Since in a Galois field, multiplication is equivalent to xor, we can begin to see how multiplication is still repeated addition in a Galois field, albeit slightly more complex.  We can also notice how the for loop runs eight times, once for each bit in the numbers.  Knowing this, we can look at the code as a set of simpler instructions:&lt;/p&gt;
+
+&lt;p&gt;1:  If b is odd, Galois-add a to the product&lt;/p&gt;
+
+&lt;p&gt;2:  Multiply a by two.&lt;/p&gt;
+
+&lt;p&gt;3:  If a is more than 256, Galois-add 283&lt;/p&gt;
+
+&lt;p&gt;4:  Divide b by two, discarding the remainder&lt;/p&gt;
+
+&lt;p&gt;5:  Repeat until b is 0&lt;/p&gt;
+
+&lt;p&gt;This is simpler, but still far removed from our normal concept of multiplication until we look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Multiplication_algorithm#Peasant_or_binary_multiplication&quot;&gt;Peasant Multiplication&lt;/a&gt;.  Expressed as a series of steps, peasant multiplication is:&lt;/p&gt;
+
+&lt;p&gt;1:  If b is odd, add a to the product&lt;/p&gt;
+
+&lt;p&gt;2:  Multiply a by two&lt;/p&gt;
+
+&lt;p&gt;3:  Divide b by two, discarding the remainder&lt;/p&gt;
+
+&lt;p&gt;4:  Do this until b is 0.&lt;/p&gt;
+
+&lt;p&gt;Using a basic knowledge of bitwise arithmetic, it is clear to see that these two algorithms are the same except for step 3 of the first one.  This is added because in Galois arithmetic, the only numbers &amp;quot;Allowed,&amp;quot; are those in a certain group, and step three is just the procedure for taking a number outside the group and converting it into one inside the group.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s interesting that a modern, CPU-optimized routine from an encryption algorithm is the same thing Egyptian peasants used millennia ago to calculate payment for sheep, but good math is the same everywhere.&lt;/p&gt;
+
+&lt;p&gt;NOTES:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt; In the actual AES algorithm, there are a few extra steps in the Galois addition function.  These serve only to prevent &lt;a href=&quot;https://en.wikipedia.org/wiki/Timing_attack&quot;&gt;Timing Attacks&lt;/a&gt; and are irrelevant to the math discussed here.&lt;/li&gt;
+&lt;li&gt; The reason 283 is the Galois group&amp;#39;s defining constant is actually fairly complicated, but it stems from the fact that it is irreducible, which is similar to primality in standard arithmetic.&lt;/li&gt;
+&lt;li&gt; Group theory is hard.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                                <pubDate>Tue, 21 Jan 2014 00:00:00 -0600</pubDate>
+                                <link>http://japesinator.github.io//2014/01/21/bitwise_galois.html</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/01/21/bitwise_galois.html</guid>
+                        </item>
+                
+        </channel>
+</rss>

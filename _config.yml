@@ -1,7 +1,15 @@
-name: japesinator.github.io
+name: japesblog
 description: Things I find interesting
 url: http://japesinator.github.io
-safe: true
+safe: True
 lsi: false
-pygments: true
 encoding: UTF-8
+markdown: redcarpet
+pygments: true
+github: www.github.com/japesinator
+about: I am a high school student in the midwest who likes math, computers, and other interesting things
+urls:
+    - text: github
+      url: https://github.com/japesinator
+    - text: email
+      url: mailto:jp.smith@ilstu.edu

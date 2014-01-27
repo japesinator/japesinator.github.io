@@ -7,6 +7,51 @@
                 <atom:link href="http://japesinator.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
+                                <title>Things I Learned Writing Trapifier.py</title>
+                                <description>&lt;h1&gt;Things I Learned Writing Trapifier.py&lt;/h1&gt;
+
+&lt;p&gt;Recently on reddit.com/r/hiphopheads, someone requested that a cover of a John Mayer song, except with trap adlibs (i.e. gunshots, airhorns, &amp;quot;DAMN SON WHERE&amp;#39;D YOU FIND THIS!?&amp;quot;).  Since this was reddit, this request was obviously &lt;a href=&quot;http://www.reddit.com/r/hiphopheads/comments/1vxdag/guys_i_need_a_favor/cewq9ao&quot;&gt;quickly fulfilled&lt;/a&gt; and the result was as hilarious and awesome as one would expect.  In the thread, people also posted a &lt;a href=&quot;https://www.youtube.com/watch?v=Hu8yGh5aEwA&quot;&gt;bunch&lt;/a&gt; &lt;a href=&quot;https://soundcloud.com/hennessyyoungman/cvsbangers&quot;&gt;of&lt;/a&gt; &lt;a href=&quot;https://www.youtube.com/watch?v=LNT-b-yfM58&amp;amp;feature=youtu.be&quot;&gt;links&lt;/a&gt; to other trap remixes of popular songs were posted.&lt;/p&gt;
+
+&lt;p&gt;I saw these and naturally thought it would be pretty fun to make my own trap remix, but I A: didn&amp;#39;t really want to play around in audacity and try to get all the samples reasonable, and B: couldn&amp;#39;t decide on just one song.  Naturally, I thought to make a script that would &amp;quot;trapify&amp;quot; songs for me, which would solve both my problems at the same time.  I sat down in front of vim and got to work.&lt;/p&gt;
+
+&lt;p&gt;The actual code for trapifier.py is fairly simple, and it&amp;#39;s all up on my &lt;a href=&quot;https://github.com/japesinator/trapifier.py&quot;&gt;github&lt;/a&gt;.  While a code analysis could be done, in my opinion, a far more interesting analysis is that of the design and distribution of the code.  Thus, below is my list of things learned writing trapifier.py.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Python has libraries for &lt;em&gt;everything&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I was at first a little worried about actually handling the audio files in python, since my knowledge of audio codecs and how to  manipulate them is fuzzy at best, but a quick google search for &amp;quot;mix audio in python&amp;quot; turned up &lt;a href=&quot;http://pydub.com/&quot;&gt;pydub&lt;/a&gt;, which ended up solving pretty much all my audio problems at once.  Later, when I was trying to make it work well from the command line and failing miserably to get optional arguments to work like I wanted, another google search turned up &lt;a href=&quot;http://docs.python.org/dev/library/argparse.html&quot;&gt;argparse&lt;/a&gt;, which might be the single most useful python library I&amp;#39;ve seen since os.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Computer-timed isn&amp;#39;t always better than random&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When I first started the project, I thought that I would make the overlaying function context-dependant, so that for instance when the song crescendoed, the algorithm would place &amp;quot;bigger&amp;quot; samples.  But, as it turns out, this kind of analysis is hard, and the changes in songs significant enough to be picked up by my (admittedly clumsy) algorithms were so infrequent as to place samples far too infrequently.  Instead, I chose to place a sample every 1.5-6 seconds and hope that it would sync well.  As it turns out, this actually works about as well as manual placement, albeit much faster.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  r/hiphopheads has a surprising number of programmers.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For music-focused subreddit, the number of intelligent programmers on r/hiphopheads is surprisingly high.  While there were some comments along the lines of &amp;quot;You go to MIT?!?!&amp;quot; (because I MIT licensed the code) and &amp;quot;Super dope script bruh. Algorithmically this is some e=mc2 shit,&amp;quot; there were also a surprising number of helpful comments about the actual code and what to do with it.  People talked about refactoring code and using os.path.join for more cross-compatibility and generally gave helpful advice about the design of the program, something I did not see coming from where it did.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Windows is hard.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For reference, I don&amp;#39;t actually own a Windows machine I can test on, so maybe I&amp;#39;m exaggerating here, but it seems to me that it would take more time to get the script to work on Windows (without python already installed) than it would to write it in the first place.  At some point I should probably learn Windows, as pretty much everything I do with computers I do worse on Windows, but that point has yet to arrive.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Programming is really fun&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I suppose I didn&amp;#39;t really &lt;em&gt;learn&lt;/em&gt; this, since I had known it before, but the actual writing of the code for this project was one of the most enjoyable things I had done in a while.&lt;/p&gt;
+</description>
+                                <pubDate>Mon, 27 Jan 2014 00:00:00 -0600</pubDate>
+                                <link>http://japesinator.github.io//2014/01/27/things_learned_trapifying.html</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/01/27/things_learned_trapifying.html</guid>
+                        </item>
+                
+                        <item>
                                 <title>On Set</title>
                                 <description>&lt;h1&gt;On Set&lt;/h1&gt;
 

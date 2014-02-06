@@ -64,7 +64,7 @@ def galois_multiplication(first_number, second_number):
       product = product ^ f
       # xor the product with first_number
     if first_number >= 128:
-      high_bit_set = T
+      high_bit_set = True
       # Remember if a was greater than or equal to 128 here
     first_number = 2 * f
     # double the first number

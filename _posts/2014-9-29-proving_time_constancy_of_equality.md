@@ -10,11 +10,9 @@ Proving Time-Constancy of Equality
 Lately I've been working with [idris](http://www.idris-lang.org/) a bunch. Idris is a purely functional, dependently-typed, programming language, which, to quote one of my friends, makes it "Haskell for Haskell people." There are a lot of things that it does well, but one of the most interesting ones is that dependent types and the Curry-Howard isomorphism allow the writing of propositions as types and the proofs thereof to be written as the values for the variables of those types.  For example:
 
 {% highlight idris linenos %}
-
 total eqSucc : (left : Nat) -> (right : Nat) -> (p : left = right) ->
 S left = S right
 eqSucc left _ refl = refl
-
 {% endhighlight %}
 
 The above is a function taken from idris' [prelude](https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude), which is the standard library that contains most of the basic functions and proofs.  It states that if you have two natural numbers and a proof that they are equal, the successor to the first is equal to the successor to the second, and that the proof is true from the reflexive property.
@@ -33,12 +31,10 @@ The equality comparison itself is quite simple.  First, bits are defined as eith
 
 To prove time-constancy, I decided to prove that the number of primitive operations performed on bits is the same no matter what the bits are, and thus the time will be constant.  This isn't perfect due to the pattern-matching implementation of boolean logic I provided, but it's close enough for proof of concept.  To do this I wrote what's essentially a monad (I have yet to make it an instance of the monad typeclass, but that's on my todo list) that tracks the number of operations performed to yield a given bit.  The core code for this is below
 
-{%highlight idris linenos %}
-
+{% highlight idris linenos %}
 addCount : (a -> a -> a) -> (a, Nat) -> (a, Nat) -> (a, Nat)
 addCount f (a, n) (b, m) = (f a b, n + m + 1)
-
-{& endhighlight %}
+{% endhighlight %}
 
 This essentially turns a regular function from two elements of the same type to another and turns it into a function that does the same thing but counts operations. The natural number that is the second element of each tuple represents the number of operations performed to yield that value.  It takes a function and two tuples of a value and an operation count and returns a tuple of the function applied to the first elements of each tuple and one plus the counts added together, the one coming from the operation that just took place.
 

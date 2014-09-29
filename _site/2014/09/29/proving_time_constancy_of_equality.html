@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title> Proving Time-Constancy of Equality </title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+		<div id="container">
+
+			<div class="left">
+				<h1>JP Writes Code</h1>
+				<img id="about" src="/img/logo.png" height="75px" width="75px" /><br />	
+
+				<strong>navigation</strong><br />
+				<a href="/">home</a> <br />
+				
+					<a class="about" href="https://github.com/japesinator">github</a><br />
+				
+					<a class="about" href="mailto:jp.smith@ilstu.edu">email</a><br />
+				
+					<a class="about" href="/about">about</a><br />
+				
+				
+				
+				<div id="about">
+					<strong>about</strong><br />
+					I am a high school student in the midwest who likes math, computers, and other interesting things
+				</div>
+				
+			</div>
+
+			<div class="right">
+				
+				<h1>Proving Time-Constancy of Equality</h1>
+<span class="time">29 Sep 2014</span>
+
+<div class="content">
+	<div class="post"><h1>Proving Time-Constancy of Equality</h1>
+
+<p>Lately I&#39;ve been working with <a href="http://www.idris-lang.org/">idris</a> a bunch. Idris is a purely functional, dependently-typed, programming language, which, to quote one of my friends, makes it &quot;Haskell for Haskell people.&quot; There are a lot of things that it does well, but one of the most interesting ones is that dependent types and the Curry-Howard isomorphism allow the writing of propositions as types and the proofs thereof to be written as the values for the variables of those types.  For example:</p>
+
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">total</span> eqSucc <span class="ow">:</span> <span class="ow">(</span>left <span class="ow">:</span> <span class="kt">Nat</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>right <span class="ow">:</span> <span class="kt">Nat</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>p <span class="ow">:</span> left <span class="ow">=</span> right<span class="ow">)</span> <span class="ow">-&gt;</span>
+<span class="lineno">2</span> <span class="kt">S</span> left <span class="ow">=</span> <span class="kt">S</span> right
+<span class="lineno">3</span> eqSucc left <span class="kr">_</span> refl <span class="ow">=</span> refl</code></pre></div>
+
+<p>The above is a function taken from idris&#39; <a href="https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude">prelude</a>, which is the standard library that contains most of the basic functions and proofs.  It states that if you have two natural numbers and a proof that they are equal, the successor to the first is equal to the successor to the second, and that the proof is true from the reflexive property.</p>
+
+<p>This is also notable in that the same module both defines natural numbers and proves many of their properties, erasing the line between proof and program. Similarly, the module that defines the vector type also contains proofs about vectors, the module that defines lists contains proofs about lists, and so on. This is quite useful in that when you import these modules, you not only get the data types and the basic functions on them, but also the tools for reasoning about their generalized behavior.</p>
+
+<p>In my humble opinion, some of the most interesting proofs in computer science are those about algorithm runtime. The big O runtime analyses in The Art of Computer Programming some of the most elegant and beautiful proofs I have ever seen, and as soon as I saw idris&#39; proof system, I was immediately curious about how to implement these.  This also has several practical applications, as there have <a href="https://www.schneier.com/paper-side-channel.html">been</a> <a href="http://dl.acm.org/citation.cfm?id=706156">some</a> <a href="http://cr.yp.to/papers.html#cachetiming">problems</a> with people not verifying that certain algorithms in cryptography are time-constant.</p>
+
+<p>Perhaps the clearest example of how this might be a problem is equality.  Equality between two bitstrings is often implemented by comparing bits of the same index one by one until either an inequality is found (and then returning False) or there aren&#39;t any bits left (and then returning True).  This is usually pretty good, but it&#39;s notable that comparing <code>00000001</code> and <code>00000000</code> takes a long time, since it doesn&#39;t halt until all eight bits have been compared, but when <code>00000001</code> and <code>10000000</code> are compared, the comparison algorithm returns false as soon as the first bit is compared (assuming the algorithm scans from left to right.) In other words, the time the algorithm takes is a function of the &quot;close-ness&quot; of the two things being compared.</p>
+
+<p>This is usually totally fine, but occasionally crypto algorithms need to compare things to some really sensitive data.  To use a contrived example, imagine a system that has you enter a password, compares it to a known correct password, and returns whether the two are equal.  Ideally, you would have to simply try passwords until you found one that&#39;s right, which if our password is only eight bits, takes about 89 guesses to have better-than-even odds of guessing the password.  However, if the program uses the equality algorithm described above, we can just try two bitstrings, one of which starts with 0 and one of which starts with 1, and whichever one takes longer to evaluate has the correct first bit.  We can then repeat this process with the correct first bit and bitstrings with 0 for the second bit and 1 for the second bit. By repeating this eight times, we can always get the key in with a maximum of 16 guesses, two for each bit.  Also note that as the size of our key increases, the number of guesses to get it by chance increases exponentially, but the number of guesses to get it by timing attack only increases linearly.</p>
+
+<p>Slightly more elaborate versions of this attack have been used to successfully exploit AES, SSL, RSA, and most other common crytosystems on at least some level.  This is probably a bad thing.  I thus decided to write a program as proof-of-concept that compares two bytes but also proves that that comparison will always take the same time for any two pairs of bytes.  This algorithm can be found <a href="https://github.com/japesinator/tarts">on my github</a>.</p>
+
+<p>The equality comparison itself is quite simple.  First, bits are defined as either One or Zero, and bytes are defined as a vector of eight bits.  Then, to compare the equality of two bytes, we zip them together with not xor and then fold across the resulting list with And.  Not xor returns one only if the two bits it operates on are the same, so zipping two lists with it creates a new list with one in the indices where the two lists have matching values and zero where the two lists have differing values.  And can only return one if both of its input values are one, so folding it across a list will return one only if all values in the list are one, and zero otherwise.  Thus, zipping with not xor and folding with and will return one if and only if the two lists are the same, which is the definition of equality.  At some point it&#39;s likely worth proving this formally, but I have yet to do that.</p>
+
+<p>To prove time-constancy, I decided to prove that the number of primitive operations performed on bits is the same no matter what the bits are, and thus the time will be constant.  This isn&#39;t perfect due to the pattern-matching implementation of boolean logic I provided, but it&#39;s close enough for proof of concept.  To do this I wrote what&#39;s essentially a monad (I have yet to make it an instance of the monad typeclass, but that&#39;s on my todo list) that tracks the number of operations performed to yield a given bit.  The core code for this is below</p>
+
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="nf">addCount</span> <span class="ow">:</span> <span class="ow">(</span>a <span class="ow">-&gt;</span> a <span class="ow">-&gt;</span> a<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>a, <span class="kt">Nat</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>a, <span class="kt">Nat</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>a, <span class="kt">Nat</span><span class="ow">)</span>
+<span class="lineno">2</span> addCount f <span class="ow">(</span>a, n<span class="ow">)</span> <span class="ow">(</span>b, m<span class="ow">)</span> <span class="ow">=</span> <span class="ow">(</span>f a b, n <span class="ow">+</span> m <span class="ow">+</span> <span class="mi">1</span><span class="ow">)</span></code></pre></div>
+
+<p>This essentially turns a regular function from two elements of the same type to another and turns it into a function that does the same thing but counts operations. The natural number that is the second element of each tuple represents the number of operations performed to yield that value.  It takes a function and two tuples of a value and an operation count and returns a tuple of the function applied to the first elements of each tuple and one plus the counts added together, the one coming from the operation that just took place.</p>
+
+<p>To write a version of equality that also provides an operation count, we can write the same equality function as before, but using (addCount bibNXOR) instead of bitNXOR and (addcount bitAnd) instead of bitAnd and (initializeCount a) and (initializeCount b) for the two bytes being compared, where initializeCount just maps <code>(\x =&gt; (x,0))</code> on a vector, saying that (relative to our function) it took no operations to produce the initial values, as they were just given to us.</p>
+
+<p>This function will return a tuple of a bit representing whether the two bytes are equal and a natural number representing the number of operations that took place to compare them.  It&#39;s arguable that sing a single natural number is an oversimplification, as bitNXOR and bitAnd could conceivably take different times, and it should instead return a bit and a table of functions used and the number of times they were used, and I may change the behavior of addCount at some future point to provide this functionality, but at the moment it doesn&#39;t seem necessary to me.</p>
+
+<p>Once we have this function, we can write a number of lemmas to eventually give us a proof with type of <code>(a,b,c,d:Byte) -&gt; snd (countingByteEq a b) = snd (countingByteEq c d)</code>, or for any two pairs of bytes, the time to compare them is equal.  I&#39;m not going to walk through the proof of that in this blog post, as at the moment it&#39;s hideous, but the code does include a working, total proof of that proposition.</p>
+
+<p>Clearly, there&#39;s still work to be done even on the definition of equality, but the fundamental principles are sound, and hopefully similar tactics can be used on a larger scale to prove time-constancy for things like RSA and AES where that&#39;s actually really important.</p>
+</div>
+</div>
+
+				
+				<footer>
+					 
+            <p>JP Smith made this</p>
+					
+				</footer>
+			</div>
+		
+		</div>
+
+    </body>
+</html>

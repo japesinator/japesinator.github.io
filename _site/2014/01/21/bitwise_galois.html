@@ -49,7 +49,7 @@
 
 <p>Recently, I began working on implementing AES in python.  My code is largely based off of <a href="https://code.google.com/p/slowaes/">SlowAES</a>, but using much more in-depth comments, more descriptive variable names, and snake case.  I understood most of the code, but there was a function for performing &quot;Galois Multiplication&quot; for column mixing that I was unable to deduce the function of entirely.  It is reproduced below, sans comments.</p>
 
-<div class="highlight"><pre><code class="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 <span class="lineno"> 2</span>   <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="lineno"> 3</span>   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
 <span class="lineno"> 4</span>     <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
@@ -60,8 +60,7 @@
 <span class="lineno"> 9</span>     <span class="k">if</span> <span class="n">hi_bit_set</span><span class="p">:</span>
 <span class="lineno">10</span>       <span class="n">a</span> <span class="o">^=</span> <span class="mh">0x1b</span>
 <span class="lineno">11</span>     <span class="n">b</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
-<span class="lineno">12</span>   <span class="k">return</span> <span class="n">p</span>
-</code></pre></div>
+<span class="lineno">12</span>   <span class="k">return</span> <span class="n">p</span></code></pre></div>
 
 <p>A quick wikipedia search for &quot;Galois Multiplication&quot; returned a <a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic">page</a> that seemed to be about the same thing, but not in any way I could relate back to the actual code.  There was no simple English version I could find, so I looked into the <a href="http://www.samiam.org/galois.html">link</a> at the bottom of the page, which seemed to be about the same thing I was looking for.</p>
 
@@ -91,7 +90,7 @@
 
 <p>Based on my analysis of the function, I was able to rewrite it and comment it to what I found a much easier to understand, if still somewhat cryptic functions, seen below.</p>
 
-<div class="highlight"><pre><code class="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">first_number</span><span class="p">,</span> <span class="n">second_number</span><span class="p">):</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">first_number</span><span class="p">,</span> <span class="n">second_number</span><span class="p">):</span>
 <span class="lineno"> 2</span>   <span class="n">product</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="lineno"> 3</span>   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
 <span class="lineno"> 4</span>   <span class="c"># Repeat the indented block below eight times</span>
@@ -109,13 +108,12 @@
 <span class="lineno">16</span>       <span class="n">first_number</span> <span class="o">=</span> <span class="n">first_number</span> <span class="o">-</span> <span class="mi">256</span>
 <span class="lineno">17</span>     <span class="k">if</span> <span class="n">high</span><span class="o">-</span><span class="n">bit</span><span class="o">-</span><span class="nb">set</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
 <span class="lineno">18</span>     <span class="c"># If the first number was &gt;= 128, xor it with 27</span>
-<span class="lineno">19</span>       <span class="n">first_number</span> <span class="o">=</span> <span class="n">first_number</span> <span class="o">^</span> <span class="mi">0</span><span class="n">b00011011</span>
+<span class="lineno">19</span>       <span class="n">first_number</span> <span class="o">=</span> <span class="n">first_number</span> <span class="o">^</span> <span class="mb">0b00011011</span>
 <span class="lineno">20</span>     <span class="c"># The three lines below are the same as b &gt;&gt;=1</span>
 <span class="lineno">21</span>     <span class="k">if</span> <span class="n">second_number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 <span class="lineno">22</span>       <span class="n">second_number</span> <span class="o">=</span> <span class="n">second_number</span> <span class="o">-</span> <span class="mi">1</span>
 <span class="lineno">23</span>     <span class="n">second_number</span> <span class="o">=</span> <span class="n">second_number</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="lineno">24</span>   <span class="k">return</span> <span class="n">product</span>
-</code></pre></div>
+<span class="lineno">24</span>   <span class="k">return</span> <span class="n">product</span></code></pre></div>
 
 <p>While this is certainly easier to understand from an arithmetic point of view, the overall purpose of the code is still a mystery.  To understand it, we must first understand why it is used.</p>
 
@@ -127,9 +125,8 @@
 
 <p>In AES&#39;s finite field, numbers are expressed as binary, so that base is two.  The irreducible polynomial that defines the field is actually 283, or 0b100011011.  Notably, 0b100011011 % 256 (or 0b10000000) = 0b11011 (or 27) which at least partially explains where the mysterious constant in line 10 comes from.  Thus, when we want to multiply in a Galois field, we can simply multiply our two numbers like usual and then take the result modulo 283.  This certainly makes it clearer exactly what we are doing, and even allows us to rewrite our code as:</p>
 
-<div class="highlight"><pre><code class="python"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="lineno">2</span>   <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">283</span><span class="p">)</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="lineno">2</span>   <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">283</span><span class="p">)</span></code></pre></div>
 
 <p>This is definitely an improvement from our initial algorithm in terms of legibility, but it is still hard to understand how they do the same thing.  Notably, in our original algorithm, p is only modified by xoring it with a.  Since in a Galois field, multiplication is equivalent to xor, we can begin to see how multiplication is still repeated addition in a Galois field, albeit slightly more complex.  We can also notice how the for loop runs eight times, once for each bit in the numbers.  Knowing this, we can look at the code as a set of simpler instructions:</p>
 

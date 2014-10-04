@@ -51,35 +51,35 @@
 
 <p>For instance, consider the (rather trivial) example of a function that reverses lists.  In python:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
-<span class="lineno">2</span>   <span class="k">return</span> <span class="nb">list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python">def reverse(list):
+  return list[::-1]</code></pre></div>
 
 <p>In Idris</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="nf">reverse</span> <span class="ow">:</span> <span class="kt">List</span> a <span class="ow">-&gt;</span> <span class="kt">List</span> a
-<span class="lineno">2</span> reverse <span class="ow">=</span> reverse&#39; <span class="ow">[]</span>
-<span class="lineno">3</span>   <span class="kr">where</span>
-<span class="lineno">4</span>     <span class="nf">reverse&#39;</span> <span class="ow">:</span> <span class="kt">List</span> a <span class="ow">-&gt;</span> <span class="kt">List</span> a <span class="ow">-&gt;</span> <span class="kt">List</span> a
-<span class="lineno">5</span>     reverse&#39; acc <span class="ow">[]</span> <span class="ow">=</span> acc
-<span class="lineno">6</span>     reverse&#39; acc <span class="ow">(</span>x<span class="ow">::</span>xs<span class="ow">)</span> <span class="ow">=</span> reverse&#39; <span class="ow">(</span>x<span class="ow">::</span>acc<span class="ow">)</span> xs</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris">reverse : List a -&gt; List a
+reverse = reverse&#39; []
+  where
+    reverse&#39; : List a -&gt; List a -&gt; List a
+    reverse&#39; acc [] = acc
+    reverse&#39; acc (x::xs) = reverse&#39; (x::acc) xs</code></pre></div>
 
 <p>Suppose we want to show that an example list reversed twice is itself.  In Python, we might try an assertion.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="kn">import</span> <span class="nn">unittest</span>
-<span class="lineno">2</span> 
-<span class="lineno">3</span> <span class="n">testVar</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-<span class="lineno">4</span> 
-<span class="lineno">5</span> <span class="k">assert</span> <span class="n">testVar</span> <span class="o">==</span> <span class="n">reverse</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="n">testVar</span><span class="p">))</span></code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python">import unittest
+
+testVar = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+assert testVar == reverse(reverse(testVar))</code></pre></div>
 
 <p>If we were doing something more complex, we could use <a href="https://docs.python.org/2/library/unittest.html">unittest</a> or <a href="https://nose.readthedocs.org/en/latest/">nose</a> or any number of other options, but for the sake of simplicity, we&#39;ll stick with with <code>assert</code> for now.</p>
 
 <p>Now we wish to make the same assertion about our idris function.</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="nf">testvar</span> <span class="ow">:</span> <span class="kt">List</span> <span class="kt">Int</span>
-<span class="lineno">2</span> testVar <span class="ow">=</span> <span class="ow">[</span><span class="mi">0</span>, <span class="mi">1</span>, <span class="mi">2</span>, <span class="mi">3</span>, <span class="mi">4</span>, <span class="mi">5</span>, <span class="mi">6</span>, <span class="mi">7</span>, <span class="mi">8</span>, <span class="mi">9</span><span class="ow">]</span>
-<span class="lineno">3</span> 
-<span class="lineno">4</span> <span class="nf">reverseTwice</span> <span class="ow">:</span> testvar <span class="ow">=</span> reverse <span class="ow">$</span> reverse testvar
-<span class="lineno">5</span> reverseTwice <span class="ow">=</span> refl</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris">testvar : List Int
+testVar = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+reverseTwice : testvar = reverse $ reverse testvar
+reverseTwice = refl</code></pre></div>
 
 <p>Note that the assertion happens in the <em>type</em> of <code>reverseTwice</code>, not the definition like in the Python example, but the two serve the exact same purpose.  This is because an assertion is a proposition about a program, and a <a href="https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence">proposition is a type</a>, so any assertion can be written as the type of a variable, given sufficient tools to do so.  The definition of the variable with that type then, is the proof of the proposition the assertion makes in the first place.  Notably, this allows us to use relatively advanced tactics to make much more powerful assertions than in languages without this functionality.  For instance, <a href="http://sitr.us/2014/05/05/category-theory-proofs-in-idris.html">Jesse Hallett&#39;s category theory proofs</a>.</p>
 

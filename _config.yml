@@ -5,7 +5,7 @@ safe: True
 lsi: false
 encoding: UTF-8
 markdown: redcarpet
-pygments: true
+highlighter: true
 github: www.github.com/japesinator
 about: I am a high school student in the midwest who likes math, computers, and other interesting things
 urls:

@@ -7,6 +7,55 @@
                 <atom:link href="http://japesinator.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
+                                <title>Types as Tests</title>
+                                <description>&lt;h1&gt;Types as Tests&lt;/h1&gt;
+
+&lt;p&gt;Recently, a fried of mine were going over the ages old tests vs. types debate.  Specifically, if a programmer wants to have some degree of certainty that their program will function as intended, does it work better to use unit testing or static typing?  However, the more I looked at the argument we were having, the less it made sense to me as a strict dichotomy.  Obviously, best practices for ensuring Python code works as intended are different from ensuring Haskell code works as intended, and you&amp;#39;ll catch some bugs with Python best practices that you won&amp;#39;t catch with Haskell best practices and vice versa, but in a sufficiently advanced language, assertions about the code are the same as function types and vice versa.&lt;/p&gt;
+
+&lt;p&gt;For instance, consider the (rather trivial) example of a function that reverses lists.  In python:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In Idris&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-idris&quot; data-lang=&quot;idris&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;reverse&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; a &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; a
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; reverse &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; reverse&amp;#39; &lt;span class=&quot;ow&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;kr&quot;&gt;where&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;nf&quot;&gt;reverse&amp;#39;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; a &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; a &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; a
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;     reverse&amp;#39; acc &lt;span class=&quot;ow&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; acc
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;     reverse&amp;#39; acc &lt;span class=&quot;ow&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;ow&quot;&gt;::&lt;/span&gt;xs&lt;span class=&quot;ow&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; reverse&amp;#39; &lt;span class=&quot;ow&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;ow&quot;&gt;::&lt;/span&gt;acc&lt;span class=&quot;ow&quot;&gt;)&lt;/span&gt; xs&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Suppose we want to show that an example list reversed twice is itself.  In Python, we might try an assertion.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unittest&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testVar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testVar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;testVar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If we were doing something more complex, we could use &lt;a href=&quot;https://docs.python.org/2/library/unittest.html&quot;&gt;unittest&lt;/a&gt; or &lt;a href=&quot;https://nose.readthedocs.org/en/latest/&quot;&gt;nose&lt;/a&gt; or any number of other options, but for the sake of simplicity, we&amp;#39;ll stick with with &lt;code&gt;assert&lt;/code&gt; for now.&lt;/p&gt;
+
+&lt;p&gt;Now we wish to make the same assertion about our idris function.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-idris&quot; data-lang=&quot;idris&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testvar&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; testVar &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;ow&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;reverseTwice&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;:&lt;/span&gt; testvar &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; reverse &lt;span class=&quot;ow&quot;&gt;$&lt;/span&gt; reverse testvar
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; reverseTwice &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; refl&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that the assertion happens in the &lt;em&gt;type&lt;/em&gt; of &lt;code&gt;reverseTwice&lt;/code&gt;, not the definition like in the Python example, but the two serve the exact same purpose.  This is because an assertion is a proposition about a program, and a &lt;a href=&quot;https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence&quot;&gt;proposition is a type&lt;/a&gt;, so any assertion can be written as the type of a variable, given sufficient tools to do so.  The definition of the variable with that type then, is the proof of the proposition the assertion makes in the first place.  Notably, this allows us to use relatively advanced tactics to make much more powerful assertions than in languages without this functionality.  For instance, &lt;a href=&quot;http://sitr.us/2014/05/05/category-theory-proofs-in-idris.html&quot;&gt;Jesse Hallett&amp;#39;s category theory proofs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;One concrete example would be &lt;a href=&quot;https://github.com/defanor/idris-stuff/blob/master/Vect.idr&quot;&gt;this rewrite of reverse&lt;/a&gt; by defanor, that generalizes our earlier assertion to not just &lt;code&gt;testVar&lt;/code&gt;, but any Vect.  Obviously, this is more work than a simple assert statement, but an assert statement is also more work than not testing at all, and for code that &lt;em&gt;really needs to work&lt;/em&gt;, a proof that it always will work is often desirable.&lt;/p&gt;
+
+&lt;p&gt;Obviously, there are types of testing that can&amp;#39;t be written as a type.  It&amp;#39;s unlikely that &lt;a href=&quot;http://www.seleniumhq.org/&quot;&gt;selenium&lt;/a&gt; can ever have a type-level equivalent, and something like &lt;a href=&quot;https://github.com/nick8325/quickcheck&quot;&gt;quickcheck&lt;/a&gt; that uses stochastic methods to give a fuzzier guarantee is a fundamentally different tactic, but the vast majority of unit testing is equivalent to simple types.  Not only that, but dependent types and totality checking allow us to check every possible value for a parameter against its expected output all at once using mathematical reasoning.  And while there is certainly a place for assertions, dependent types make them seem as primitive as the goto when it comes to ensuring program correctness.&lt;/p&gt;
+</description>
+                                <pubDate>Fri, 03 Oct 2014 00:00:00 -0500</pubDate>
+                                <link>http://japesinator.github.io//2014/10/03/types_as_tests.html</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/10/03/types_as_tests.html</guid>
+                        </item>
+                
+                        <item>
                                 <title>A Tale of Two Alls</title>
                                 <description>&lt;h1&gt;A Tale of Two Alls&lt;/h1&gt;
 

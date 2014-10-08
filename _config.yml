@@ -12,6 +12,8 @@ urls:
     - text: github
       url: https://github.com/japesinator
     - text: email
-      url: mailto:jp.smith@ilstu.edu
+      url: mailto:jp@mail.writes.co.de
+    - text: twitter
+      url: https://twitter.com/japesinator
     - text: about
       url: /about

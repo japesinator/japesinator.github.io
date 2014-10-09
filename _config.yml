@@ -12,7 +12,7 @@ urls:
     - text: github
       url: https://github.com/japesinator
     - text: email
-      url: mailto:jp@mail.writes.co.de
+      url: mailto:jp@writes.co.de
     - text: twitter
       url: https://twitter.com/japesinator
     - text: about

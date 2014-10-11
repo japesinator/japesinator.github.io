@@ -26,7 +26,7 @@
 				
 					<a class="about" href="https://github.com/japesinator">github</a><br />
 				
-					<a class="about" href="mailto:jp@mail.writes.co.de">email</a><br />
+					<a class="about" href="mailto:jp@writes.co.de">email</a><br />
 				
 					<a class="about" href="https://twitter.com/japesinator">twitter</a><br />
 				
@@ -57,70 +57,70 @@
 
 <p>Doing some more analysis, I decided to start by picking apart <code>Dec (All P xs)</code>.  <code>:t Dec</code> shows <code>Prelude.Basics.Dec : Type -&gt; Type</code> shows that apparently <code>Dec</code> is a function from a Type to a Type, which isn&#39;t necessarily helpful by itself, but <code>:doc Dec</code> actually is, returning:</p>
 
-<div class="highlight"><pre><code class="language-lidr" data-lang="lidr">Data type
-&gt; Dec : Type -&gt; Type
-    Decidability. A decidable property either holds or is a
-    contradiction.
-
-Constructors:
-&gt; Yes : (prf : A) -&gt; Dec A
-        The case where the property holds
-        Arguments:
-&gt; prf : A  -- the proof
-
-&gt; No : (contra : A -&gt; _|_) -&gt; Dec A
-        The case where the property holding would be a contradiction
-        Arguments:
-&gt; contra : A -&gt; _|_  -- a demonstration that A would be a contradiction</code></pre></div>
+<div class="highlight"><pre><code class="language-lidr" data-lang="lidr"><span class="lineno"> 1</span> Data type
+<span class="lineno"> 2</span> <span class="cs">&gt; </span><span class="nf">Dec</span> <span class="ow">:</span> <span class="kt">Type</span> <span class="ow">-&gt;</span> <span class="kt">Type</span>
+<span class="lineno"> 3</span>     Decidability. A decidable property either holds or is a
+<span class="lineno"> 4</span>     contradiction.
+<span class="lineno"> 5</span> 
+<span class="lineno"> 6</span> Constructors:
+<span class="lineno"> 7</span> <span class="cs">&gt; </span><span class="nf">Yes</span> <span class="ow">:</span> <span class="ow">(</span>prf <span class="ow">:</span> <span class="kt">A</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="kt">A</span>
+<span class="lineno"> 8</span>         The case where the property holds
+<span class="lineno"> 9</span>         Arguments:
+<span class="lineno">10</span> <span class="cs">&gt; </span><span class="nf">prf</span> <span class="ow">:</span> <span class="kt">A</span>  <span class="c1">-- the proof</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span> <span class="cs">&gt; </span><span class="nf">No</span> <span class="ow">:</span> <span class="ow">(</span>contra <span class="ow">:</span> <span class="kt">A</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="kt">A</span>
+<span class="lineno">13</span>         The case where the property holding would be a contradiction
+<span class="lineno">14</span>         Arguments:
+<span class="lineno">15</span> <span class="cs">&gt; </span><span class="nf">contra</span> <span class="ow">:</span> <span class="kt">A</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span>  <span class="c1">-- a demonstration that A would be a contradiction</span></code></pre></div>
 
 <p>Now we&#39;re getting somewhere.  <code>Dec</code> takes as a parameter a type, but since this is idris, types and propositions are the same thing, and <code>Dec</code> just states that either the proposition holds or doesn&#39;t.  Since the proposition is either true (it can be shown to hold in this case) or false (it implies a contradiction if true), <code>Dec</code> will return either <code>Yes</code> or <code>No</code>.  This is quite similar to a standard Bool, but arguably more useful in that it can speak about general cases and also state both whether the given statement is true or false, but also in some sense why.  For instance idris defines a class <code>DecEq</code> as:</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris">class DecEq t where
-  total decEq : (x1 : t) -&gt; (x2 : t) -&gt; Dec (x1 = x2)</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">class</span> <span class="kt">DecEq</span> t <span class="kr">where</span>
+<span class="lineno">2</span>   <span class="kr">total</span> decEq <span class="ow">:</span> <span class="ow">(</span>x1 <span class="ow">:</span> t<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>x2 <span class="ow">:</span> t<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="ow">(</span>x1 <span class="ow">=</span> x2<span class="ow">)</span></code></pre></div>
 
 <p>In some sense this serves the same purpose as <code>(==)</code> (which has a type of <code>Prelude.Classes.(==) : Eq a =&gt; a -&gt; a -&gt; Bool</code> in idris), but because <code>(==)</code> returns a <code>Bool</code>, it can only tell us whether two things are equal, whereas <code>DecEq</code> can tell us <em>why</em> two things are equal.</p>
 
 <p>In fact, <code>DecEq</code> is actually defined on Bools in Decidable.Equality as:</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris">total trueNotFalse : True = False -&gt; _|_
-trueNotFalse Refl impossible
-
-instance DecEq Bool where
-  decEq True True = Yes Refl
-  decEq False False = Yes Refl
-  decEq True False = No trueNotFalse
-  decEq False True = No (negEqSym trueNotFalse)</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">total</span> trueNotFalse <span class="ow">:</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">False</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span>
+<span class="lineno">2</span> trueNotFalse <span class="kt">Refl</span> <span class="kr">impossible</span>
+<span class="lineno">3</span> 
+<span class="lineno">4</span> <span class="kr">instance</span> <span class="kt">DecEq</span> <span class="kt">Bool</span> <span class="kr">where</span>
+<span class="lineno">5</span>   decEq <span class="kt">True</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">Yes</span> <span class="kt">Refl</span>
+<span class="lineno">6</span>   decEq <span class="kt">False</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">Yes</span> <span class="kt">Refl</span>
+<span class="lineno">7</span>   decEq <span class="kt">True</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">No</span> trueNotFalse
+<span class="lineno">8</span>   decEq <span class="kt">False</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">No</span> <span class="ow">(</span>negEqSym trueNotFalse<span class="ow">)</span></code></pre></div>
 
 <p>Note the difference between this and the definition of <code>Eq</code> for Bools, which is simply:</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris">instance Eq Bool where
-  True == True = True
-  True == False = False
-  False == True = False
-  False == False = True</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">instance</span> <span class="kt">Eq</span> <span class="kt">Bool</span> <span class="kr">where</span>
+<span class="lineno">2</span>   <span class="kt">True</span> <span class="ow">==</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">True</span>
+<span class="lineno">3</span>   <span class="kt">True</span> <span class="ow">==</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">False</span>
+<span class="lineno">4</span>   <span class="kt">False</span> <span class="ow">==</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">False</span>
+<span class="lineno">5</span>   <span class="kt">False</span> <span class="ow">==</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">True</span></code></pre></div>
 
 <p>The crucial difference between the two is that while <code>True == False = False</code> says that True and False <em>are not</em> equal, <code>decEq True False = No trueNotFalse</code> says True and False <em>cannot</em> be equal.  Back to the case of lists, if we look at the definitions of <code>All</code> and <code>all</code>, we find:</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris">data All : (P : a -&gt; Type) -&gt; Vect n a -&gt; Type where
-  Nil : {P : a -&gt; Type} -&gt; All P Nil
-  (::) : {P : a -&gt; Type} -&gt; {xs : Vect n a} -&gt; P x -&gt; All P xs -&gt; All P (x :: xs)
-
-notAllHere : {P : a -&gt; Type} -&gt; {xs : Vect n a} -&gt; Not (P x) -&gt; All P (x :: xs) -&gt; _|_
-notAllHere _ Nil impossible
-notAllHere np (p :: _) = np p
-
-notAllThere : {P : a -&gt; Type} -&gt; {xs : Vect n a} -&gt; Not (All P xs) -&gt; All P (x :: xs) -&gt; _|_
-notAllThere _ Nil impossible
-notAllThere np (_ :: ps) = np ps
-
-all : {P : a -&gt; Type} -&gt; ((x : a) -&gt; Dec (P x)) -&gt; (xs : Vect n a) -&gt; Dec (All P xs)
-all _ Nil = Yes Nil
-all d (x::xs) with (d x)
-  | No prf = No (notAllHere prf)
-  | Yes prf =
-  case all d xs of
-    Yes prf&#39; =&gt; Yes (prf :: prf&#39;)
-    No prf&#39; =&gt; No (notAllThere prf&#39;)</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno"> 1</span> <span class="kr">data</span> <span class="kt">All</span> <span class="ow">:</span> <span class="ow">(</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Vect</span> n a <span class="ow">-&gt;</span> <span class="kt">Type</span> <span class="kr">where</span>
+<span class="lineno"> 2</span>   <span class="nf">Nil</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> <span class="kt">Nil</span>
+<span class="lineno"> 3</span>   <span class="ow">(::)</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="ow">{</span>xs <span class="ow">:</span> <span class="kt">Vect</span> n a<span class="ow">}</span> <span class="ow">-&gt;</span> <span class="kt">P</span> x <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> xs <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> <span class="ow">(</span>x <span class="ow">::</span> xs<span class="ow">)</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> <span class="nf">notAllHere</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="ow">{</span>xs <span class="ow">:</span> <span class="kt">Vect</span> n a<span class="ow">}</span> <span class="ow">-&gt;</span> <span class="kt">Not</span> <span class="ow">(</span><span class="kt">P</span> x<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> <span class="ow">(</span>x <span class="ow">::</span> xs<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span>
+<span class="lineno"> 6</span> notAllHere <span class="kr">_</span> <span class="kt">Nil</span> <span class="kr">impossible</span>
+<span class="lineno"> 7</span> notAllHere np <span class="ow">(</span>p <span class="ow">::</span> <span class="kr">_</span><span class="ow">)</span> <span class="ow">=</span> np p
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span> <span class="nf">notAllThere</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="ow">{</span>xs <span class="ow">:</span> <span class="kt">Vect</span> n a<span class="ow">}</span> <span class="ow">-&gt;</span> <span class="kt">Not</span> <span class="ow">(</span><span class="kt">All</span> <span class="kt">P</span> xs<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> <span class="ow">(</span>x <span class="ow">::</span> xs<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span>
+<span class="lineno">10</span> notAllThere <span class="kr">_</span> <span class="kt">Nil</span> <span class="kr">impossible</span>
+<span class="lineno">11</span> notAllThere np <span class="ow">(</span><span class="kr">_</span> <span class="ow">::</span> ps<span class="ow">)</span> <span class="ow">=</span> np ps
+<span class="lineno">12</span> 
+<span class="lineno">13</span> <span class="nf">all</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="ow">((</span>x <span class="ow">:</span> a<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="ow">(</span><span class="kt">P</span> x<span class="ow">))</span> <span class="ow">-&gt;</span> <span class="ow">(</span>xs <span class="ow">:</span> <span class="kt">Vect</span> n a<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="ow">(</span><span class="kt">All</span> <span class="kt">P</span> xs<span class="ow">)</span>
+<span class="lineno">14</span> all <span class="kr">_</span> <span class="kt">Nil</span> <span class="ow">=</span> <span class="kt">Yes</span> <span class="kt">Nil</span>
+<span class="lineno">15</span> all d <span class="ow">(</span>x<span class="ow">::</span>xs<span class="ow">)</span> <span class="kr">with</span> <span class="ow">(</span>d x<span class="ow">)</span>
+<span class="lineno">16</span>   <span class="ow">|</span> <span class="kt">No</span> prf <span class="ow">=</span> <span class="kt">No</span> <span class="ow">(</span>notAllHere prf<span class="ow">)</span>
+<span class="lineno">17</span>   <span class="ow">|</span> <span class="kt">Yes</span> prf <span class="ow">=</span>
+<span class="lineno">18</span>   <span class="kr">case</span> all d xs <span class="kr">of</span>
+<span class="lineno">19</span>     <span class="kt">Yes</span> prf&#39; <span class="ow">=&gt;</span> <span class="kt">Yes</span> <span class="ow">(</span>prf <span class="ow">::</span> prf&#39;<span class="ow">)</span>
+<span class="lineno">20</span>     <span class="kt">No</span> prf&#39; <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(</span>notAllThere prf&#39;<span class="ow">)</span></code></pre></div>
 
 <p>This is now much clearer (at least to me.) <code>all</code> takes a proposition, a way to verify that proposition, and a list of things, and returns why the proposition does or doesn&#39;t hold for everything in the list.  It&#39;s the difference between a multiple-choice and short-answer question, in that while they can state the same thing, the answer to one is much more helpful in reasoning about future questions than the other.  While a Bool is fine for simple questions, there&#39;s a lot to be gained from using <code>Dec</code> when it&#39;s practical.</p>
 
@@ -128,20 +128,20 @@ all d (x::xs) with (d x)
 
 <p>The solver shown uses the Data.Vect.Quantifier version of <code>all</code> to reason about things like whether given rows and columns are &quot;safe&quot; to place an element in, perhaps most notably in the definition of legalVal, which is used to evaluate whether a given cell assignment is &quot;legal&quot; with regard to the definition of quasigroup.</p>
 
-<div class="highlight"><pre><code class="language-idris" data-lang="idris">LegalVal : Board n -&gt; (Fin n, Fin n) -&gt; Fin n -&gt; Type
-LegalVal b (x, y) val = (Empty (getCell b (x, y)), All (LegalNeighbors (Just val)) (getCol x b), All (LegalNeighbors (Just val)) (getRow y b))
-
-legalVal : (b : Board n) -&gt; (coord : (Fin n, Fin n)) -&gt; (val : Fin n) -&gt; Dec (LegalVal b coord val)
-legalVal b (x, y) v =
-case rowSafe b y v of
-  No prf =&gt; No (\(_, _, rf) =&gt; prf rf)
-  Yes prf =&gt;
-  case colSafe b x v of
-    No prf&#39; =&gt; No (\(_, cf, _) =&gt; prf&#39; cf)
-    Yes prf&#39; =&gt;
-    case empty (getCell b (x, y)) of
-      No prf&#39;&#39; =&gt; No (\(ef, _, _) =&gt; prf&#39;&#39; ef)
-      Yes prf&#39;&#39; =&gt; Yes (prf&#39;&#39;, prf&#39;, prf)</code></pre></div>
+<div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno"> 1</span> <span class="nf">LegalVal</span> <span class="ow">:</span> <span class="kt">Board</span> n <span class="ow">-&gt;</span> <span class="ow">(</span><span class="kt">Fin</span> n, <span class="kt">Fin</span> n<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Fin</span> n <span class="ow">-&gt;</span> <span class="kt">Type</span>
+<span class="lineno"> 2</span> <span class="kt">LegalVal</span> b <span class="ow">(</span>x, y<span class="ow">)</span> val <span class="ow">=</span> <span class="ow">(</span><span class="kt">Empty</span> <span class="ow">(</span>getCell b <span class="ow">(</span>x, y<span class="ow">))</span>, <span class="kt">All</span> <span class="ow">(</span><span class="kt">LegalNeighbors</span> <span class="ow">(</span><span class="kt">Just</span> val<span class="ow">))</span> <span class="ow">(</span>getCol x b<span class="ow">)</span>, <span class="kt">All</span> <span class="ow">(</span><span class="kt">LegalNeighbors</span> <span class="ow">(</span><span class="kt">Just</span> val<span class="ow">))</span> <span class="ow">(</span>getRow y b<span class="ow">))</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="nf">legalVal</span> <span class="ow">:</span> <span class="ow">(</span>b <span class="ow">:</span> <span class="kt">Board</span> n<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>coord <span class="ow">:</span> <span class="ow">(</span><span class="kt">Fin</span> n, <span class="kt">Fin</span> n<span class="ow">))</span> <span class="ow">-&gt;</span> <span class="ow">(</span>val <span class="ow">:</span> <span class="kt">Fin</span> n<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="ow">(</span><span class="kt">LegalVal</span> b coord val<span class="ow">)</span>
+<span class="lineno"> 5</span> legalVal b <span class="ow">(</span>x, y<span class="ow">)</span> v <span class="ow">=</span>
+<span class="lineno"> 6</span> <span class="kr">case</span> rowSafe b y v <span class="kr">of</span>
+<span class="lineno"> 7</span>   <span class="kt">No</span> prf <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(\(</span><span class="kr">_</span>, <span class="kr">_</span>, rf<span class="ow">)</span> <span class="ow">=&gt;</span> prf rf<span class="ow">)</span>
+<span class="lineno"> 8</span>   <span class="kt">Yes</span> prf <span class="ow">=&gt;</span>
+<span class="lineno"> 9</span>   <span class="kr">case</span> colSafe b x v <span class="kr">of</span>
+<span class="lineno">10</span>     <span class="kt">No</span> prf&#39; <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(\(</span><span class="kr">_</span>, cf, <span class="kr">_</span><span class="ow">)</span> <span class="ow">=&gt;</span> prf&#39; cf<span class="ow">)</span>
+<span class="lineno">11</span>     <span class="kt">Yes</span> prf&#39; <span class="ow">=&gt;</span>
+<span class="lineno">12</span>     <span class="kr">case</span> empty <span class="ow">(</span>getCell b <span class="ow">(</span>x, y<span class="ow">))</span> <span class="kr">of</span>
+<span class="lineno">13</span>       <span class="kt">No</span> prf&#39;&#39; <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(\(</span>ef, <span class="kr">_</span>, <span class="kr">_</span><span class="ow">)</span> <span class="ow">=&gt;</span> prf&#39;&#39; ef<span class="ow">)</span>
+<span class="lineno">14</span>       <span class="kt">Yes</span> prf&#39;&#39; <span class="ow">=&gt;</span> <span class="kt">Yes</span> <span class="ow">(</span>prf&#39;&#39;, prf&#39;, prf<span class="ow">)</span></code></pre></div>
 
 <p>In the definition of <code>legalVal</code>, <code>prf</code>, <code>prf&#39;</code>, and <code>prf&#39;&#39;</code> all refer to proofs of the &quot;safety&quot; of the given value at the given coordinates with respect to its row, column, and occupancy status.  This allows <code>LegalVal</code> to be a type that only represents legal values, and thus guarantee that functions using that type can only ever give legal values, because otherwise the program would type check.  Not that this is totally impossible in a language like Haskell with no dependant types, as you cannot have a function like <code>LegalVal</code> to a type, and hence the type cannot <em>depend</em> on parameters that aren&#39;t other types, and hence can&#39;t carry guarantees about them like in a language like idris.</p>
 

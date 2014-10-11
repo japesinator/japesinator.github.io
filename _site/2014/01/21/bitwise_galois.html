@@ -26,7 +26,7 @@
 				
 					<a class="about" href="https://github.com/japesinator">github</a><br />
 				
-					<a class="about" href="mailto:jp@mail.writes.co.de">email</a><br />
+					<a class="about" href="mailto:jp@writes.co.de">email</a><br />
 				
 					<a class="about" href="https://twitter.com/japesinator">twitter</a><br />
 				
@@ -51,18 +51,18 @@
 
 <p>Recently, I began working on implementing AES in python.  My code is largely based off of <a href="https://code.google.com/p/slowaes/">SlowAES</a>, but using much more in-depth comments, more descriptive variable names, and snake case.  I understood most of the code, but there was a function for performing &quot;Galois Multiplication&quot; for column mixing that I was unable to deduce the function of entirely.  It is reproduced below, sans comments.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python">def galois_multiplication(a, b):
-  p = 0
-  for i in range(8):
-    if b &amp; 1:
-      p ^= a
-    hi_bit_set = a &amp; 0x80
-    a &lt;&lt;= 1
-    a &amp;= 0xFF
-    if hi_bit_set:
-      a ^= 0x1b
-    b &gt;&gt;= 1
-  return p</code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="lineno"> 2</span>   <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="lineno"> 3</span>   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+<span class="lineno"> 4</span>     <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="lineno"> 5</span>       <span class="n">p</span> <span class="o">^=</span> <span class="n">a</span>
+<span class="lineno"> 6</span>     <span class="n">hi_bit_set</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x80</span>
+<span class="lineno"> 7</span>     <span class="n">a</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span>
+<span class="lineno"> 8</span>     <span class="n">a</span> <span class="o">&amp;=</span> <span class="mh">0xFF</span>
+<span class="lineno"> 9</span>     <span class="k">if</span> <span class="n">hi_bit_set</span><span class="p">:</span>
+<span class="lineno">10</span>       <span class="n">a</span> <span class="o">^=</span> <span class="mh">0x1b</span>
+<span class="lineno">11</span>     <span class="n">b</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+<span class="lineno">12</span>   <span class="k">return</span> <span class="n">p</span></code></pre></div>
 
 <p>A quick wikipedia search for &quot;Galois Multiplication&quot; returned a <a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic">page</a> that seemed to be about the same thing, but not in any way I could relate back to the actual code.  There was no simple English version I could find, so I looked into the <a href="http://www.samiam.org/galois.html">link</a> at the bottom of the page, which seemed to be about the same thing I was looking for.</p>
 
@@ -92,30 +92,30 @@
 
 <p>Based on my analysis of the function, I was able to rewrite it and comment it to what I found a much easier to understand, if still somewhat cryptic functions, seen below.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python">def galois_multiplication(first_number, second_number):
-  product = 0
-  for i in range(8):
-  # Repeat the indented block below eight times
-    if (second_number % 2) != 0:
-    # If b is odd,
-      product = product ^ f
-      # xor the product with first_number
-    if first_number &gt;= 128:
-      high_bit_set = True
-      # Remember if a was greater than or equal to 128 here
-    first_number = 2 * f
-    # double the first number
-    if first_number &gt;= 256:
-    # This conditional essentially sets the first number equal to itself modulo 256
-      first_number = first_number - 256
-    if high-bit-set == True:
-    # If the first number was &gt;= 128, xor it with 27
-      first_number = first_number ^ 0b00011011
-    # The three lines below are the same as b &gt;&gt;=1
-    if second_number % 2 == 1:
-      second_number = second_number - 1
-    second_number = second_number / 2
-  return product</code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">first_number</span><span class="p">,</span> <span class="n">second_number</span><span class="p">):</span>
+<span class="lineno"> 2</span>   <span class="n">product</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="lineno"> 3</span>   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+<span class="lineno"> 4</span>   <span class="c"># Repeat the indented block below eight times</span>
+<span class="lineno"> 5</span>     <span class="k">if</span> <span class="p">(</span><span class="n">second_number</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="lineno"> 6</span>     <span class="c"># If b is odd,</span>
+<span class="lineno"> 7</span>       <span class="n">product</span> <span class="o">=</span> <span class="n">product</span> <span class="o">^</span> <span class="n">f</span>
+<span class="lineno"> 8</span>       <span class="c"># xor the product with first_number</span>
+<span class="lineno"> 9</span>     <span class="k">if</span> <span class="n">first_number</span> <span class="o">&gt;=</span> <span class="mi">128</span><span class="p">:</span>
+<span class="lineno">10</span>       <span class="n">high_bit_set</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="lineno">11</span>       <span class="c"># Remember if a was greater than or equal to 128 here</span>
+<span class="lineno">12</span>     <span class="n">first_number</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f</span>
+<span class="lineno">13</span>     <span class="c"># double the first number</span>
+<span class="lineno">14</span>     <span class="k">if</span> <span class="n">first_number</span> <span class="o">&gt;=</span> <span class="mi">256</span><span class="p">:</span>
+<span class="lineno">15</span>     <span class="c"># This conditional essentially sets the first number equal to itself modulo 256</span>
+<span class="lineno">16</span>       <span class="n">first_number</span> <span class="o">=</span> <span class="n">first_number</span> <span class="o">-</span> <span class="mi">256</span>
+<span class="lineno">17</span>     <span class="k">if</span> <span class="n">high</span><span class="o">-</span><span class="n">bit</span><span class="o">-</span><span class="nb">set</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+<span class="lineno">18</span>     <span class="c"># If the first number was &gt;= 128, xor it with 27</span>
+<span class="lineno">19</span>       <span class="n">first_number</span> <span class="o">=</span> <span class="n">first_number</span> <span class="o">^</span> <span class="mb">0b00011011</span>
+<span class="lineno">20</span>     <span class="c"># The three lines below are the same as b &gt;&gt;=1</span>
+<span class="lineno">21</span>     <span class="k">if</span> <span class="n">second_number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="lineno">22</span>       <span class="n">second_number</span> <span class="o">=</span> <span class="n">second_number</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="lineno">23</span>     <span class="n">second_number</span> <span class="o">=</span> <span class="n">second_number</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="lineno">24</span>   <span class="k">return</span> <span class="n">product</span></code></pre></div>
 
 <p>While this is certainly easier to understand from an arithmetic point of view, the overall purpose of the code is still a mystery.  To understand it, we must first understand why it is used.</p>
 
@@ -127,8 +127,8 @@
 
 <p>In AES&#39;s finite field, numbers are expressed as binary, so that base is two.  The irreducible polynomial that defines the field is actually 283, or 0b100011011.  Notably, 0b100011011 % 256 (or 0b10000000) = 0b11011 (or 27) which at least partially explains where the mysterious constant in line 10 comes from.  Thus, when we want to multiply in a Galois field, we can simply multiply our two numbers like usual and then take the result modulo 283.  This certainly makes it clearer exactly what we are doing, and even allows us to rewrite our code as:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python">def galois_multiplication(a, b):
-  return ((a * b) % 283)</code></pre></div>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">galois_multiplication</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="lineno">2</span>   <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">283</span><span class="p">)</span></code></pre></div>
 
 <p>This is definitely an improvement from our initial algorithm in terms of legibility, but it is still hard to understand how they do the same thing.  Notably, in our original algorithm, p is only modified by xoring it with a.  Since in a Galois field, multiplication is equivalent to xor, we can begin to see how multiplication is still repeated addition in a Galois field, albeit slightly more complex.  We can also notice how the for loop runs eight times, once for each bit in the numbers.  Knowing this, we can look at the code as a set of simpler instructions:</p>
 

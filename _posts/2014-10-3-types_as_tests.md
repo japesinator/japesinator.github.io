@@ -7,7 +7,7 @@ tags: idris
 Types as Tests
 ==============
 
-Recently, a fried of mine were going over the ages old tests vs. types debate.  Specifically, if a programmer wants to have some degree of certainty that their program will function as intended, does it work better to use unit testing or static typing?  However, the more I looked at the argument we were having, the less it made sense to me as a strict dichotomy.  Obviously, best practices for ensuring Python code works as intended are different from ensuring Haskell code works as intended, and you'll catch some bugs with Python best practices that you won't catch with Haskell best practices and vice versa, but in a sufficiently advanced language, assertions about the code are the same as function types and vice versa.
+Recently, a friend of mine and I were going over the ages old tests vs. types debate.  Specifically, if a programmer wants to have some degree of certainty that their program will function as intended, does it work better to use unit testing or static typing?  However, the more I looked at the argument we were having, the less it made sense to me as a strict dichotomy.  Obviously, best practices for ensuring Python code works as intended are different from ensuring Haskell code works as intended, and you'll catch some bugs with Python best practices that you won't catch with Haskell best practices and vice versa, but in a sufficiently advanced language, assertions about the code are the same as function types and vice versa.
 
 For instance, consider the (rather trivial) example of a function that reverses lists.  In python:
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title> Stacked Type Signatures </title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+		<div id="container">
+
+			<div class="left">
+				<h1>JP Writes Code</h1>
+				<img id="about" src="/img/logo.png" height="75px" width="75px" /><br />	
+
+				<strong>navigation</strong><br />
+				<a href="/">home</a> <br />
+				
+					<a class="about" href="https://github.com/japesinator">github</a><br />
+				
+					<a class="about" href="mailto:jp@writes.co.de">email</a><br />
+				
+					<a class="about" href="https://twitter.com/japesinator">twitter</a><br />
+				
+					<a class="about" href="/about">about</a><br />
+				
+				
+				
+				<div id="about">
+					<strong>about</strong><br />
+					I am a high school student in the midwest who likes math, computers, and other interesting things
+				</div>
+				
+			</div>
+
+			<div class="right">
+				
+				<h1>Stacked Type Signatures</h1>
+<span class="time">16 Oct 2014</span>
+
+<div class="content">
+	<div class="post"><h1>Stacked Type Signatures</h1>
+
+<p>In general, I greatly prefer programming in functional, strongly-typed languages.  I&#39;m currently working on <a href="https://github.com/Lopi/HackMan">a project</a> in <a href="http://elm-lang.org/">elm</a>, <a href="https://github.com/japesinator/tarts">a project</a> in <a href="http://www.idris-lang.org/">idris</a> and a few miscellaneous odds and ends in Haskell.  In all of these languages, types are relatively important, and especially so in the style of programming I tend to prefer.</p>
+
+<p>In said functional, strongly-typed languages, type signatures are either best practices or required for functions.  The typical format of a type signature is something along the lines of:</p>
+
+<div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="nf">map</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span></code></pre></div>
+
+<p>Which is read &quot;<code>map</code> is a function from a function from something of type <code>a</code> to something of type <code>b</code> to a function from a list of type <code>a</code> to a list of type <code>b</code>&quot;, or, to put it less completely unitelligibly, <code>map</code> takes a function and a list of things that function can be applied to and returns a list of things of the same type as that function returns.  However, lately I&#39;ve switched from the style above in writing my own type signatures to something more like:</p>
+
+<div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="nf">map</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span>
+       <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span>
+       <span class="p">[</span><span class="n">b</span><span class="p">]</span></code></pre></div>
+
+<p>At first this seems totally unnecessary and waste-of-space-y, but I actually have grown to greatly prefer it over the standard style.  While for <code>map</code> it doesn&#39;t make a ton of difference, in more complex type signatures, I&#39;ve found it makes both reading and documenting code much more intuitive, at least for me.  Consider the function <code>zipWith3</code>:</p>
+
+<div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="nf">zipWith3</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">d</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">d</span><span class="p">]</span></code></pre></div>
+
+<p>Rewritten in stacked style:</p>
+
+<div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="nf">zipWith3</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">d</span><span class="p">)</span> <span class="ow">-&gt;</span>
+            <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span>
+            <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span>
+            <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">-&gt;</span>
+            <span class="p">[</span><span class="n">d</span><span class="p">]</span></code></pre></div>
+
+<p>Immediately, it seems a bit clearer, but now consider the well-commented version.</p>
+
+<div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="nf">zipWith3</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">d</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="c1">-- The function to zip with</span>
+            <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span>                <span class="c1">-- The first list to zip together</span>
+            <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span>                <span class="c1">-- The second list to zip together</span>
+            <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">-&gt;</span>                <span class="c1">-- The third list to zip together</span>
+            <span class="p">[</span><span class="n">d</span><span class="p">]</span>                   <span class="c1">-- The list of results when the function is</span>
+                                  <span class="c1">--   applied element-by-element to the given</span>
+                                  <span class="c1">--   lists.</span></code></pre></div>
+
+<p>Obviously, that&#39;s an unnecessary amount of information, but it gives a far clearer picture of what the function really does.  Note that the description of each argument is able to be immediately next to the kind itself, which is nice for casual reading of the code, and the difference between the <code>-&gt;</code>&#39;s in the function used to zip with and the <code>-&gt;</code>&#39;s in the actual type signature.  In fact, the type signature serves as pretty much all the documentation the function needs.  Of course, the <code>|||</code> documentation style also works well, but between commenting next to a stacked type signature and commenting above/below a function, I personally find the former much more legible.</p>
+</div>
+</div>
+
+				
+				<footer>
+					 
+            <p>JP Smith made this</p>
+					
+				</footer>
+			</div>
+		
+		</div>
+
+    </body>
+</html>

@@ -1,6 +1,7 @@
 name: JP Writes Code
 description: Things I find interesting
-url: http://japesinator.github.io
+url: http://writes.co.de
+permalink: pretty
 safe: True
 lsi: false
 encoding: UTF-8

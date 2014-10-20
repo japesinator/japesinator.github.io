@@ -3,8 +3,8 @@
         <channel>
                 <title>JP Writes Code</title>
                 <description>Things I find interesting</description>
-                <link>http://writes.co.de</link>
-                <atom:link href="http://writes.co.de/feed.xml" rel="self" type="application/rss+xml" />
+                <link>http://japesinator.github.io</link>
+                <atom:link href="http://japesinator.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
                                 <title>Stacked Type Signatures</title>
@@ -47,8 +47,8 @@
 &lt;p&gt;Obviously, that&amp;#39;s an unnecessary amount of information, but it gives a far clearer picture of what the function really does.  Note that the description of each argument is able to be immediately next to the kind itself, which is nice for casual reading of the code, and the difference between the &lt;code&gt;-&amp;gt;&lt;/code&gt;&amp;#39;s in the function used to zip with and the &lt;code&gt;-&amp;gt;&lt;/code&gt;&amp;#39;s in the actual type signature.  In fact, the type signature serves as pretty much all the documentation the function needs.  Of course, the &lt;code&gt;|||&lt;/code&gt; documentation style also works well, but between commenting next to a stacked type signature and commenting above/below a function, I personally find the former much more legible.&lt;/p&gt;
 </description>
                                 <pubDate>Thu, 16 Oct 2014 00:00:00 -0500</pubDate>
-                                <link>http://writes.co.de//2014/10/16/stacked_type_signatures/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/10/16/stacked_type_signatures/</guid>
+                                <link>http://japesinator.github.io//2014/10/16/stacked_type_signatures/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/10/16/stacked_type_signatures/</guid>
                         </item>
                 
                         <item>
@@ -96,8 +96,8 @@
 &lt;p&gt;Obviously, there are types of testing that can&amp;#39;t be written as a type.  It&amp;#39;s unlikely that &lt;a href=&quot;http://www.seleniumhq.org/&quot;&gt;selenium&lt;/a&gt; can ever have a type-level equivalent, and something like &lt;a href=&quot;https://github.com/nick8325/quickcheck&quot;&gt;quickcheck&lt;/a&gt; that uses stochastic methods to give a fuzzier guarantee is a fundamentally different tactic, but the vast majority of unit testing is equivalent to simple types.  Not only that, but dependent types and totality checking allow us to check every possible value for a parameter against its expected output all at once using mathematical reasoning.  And while there is certainly a place for assertions, dependent types make them seem as primitive as the goto when it comes to ensuring program correctness.&lt;/p&gt;
 </description>
                                 <pubDate>Fri, 03 Oct 2014 00:00:00 -0500</pubDate>
-                                <link>http://writes.co.de//2014/10/03/types_as_tests/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/10/03/types_as_tests/</guid>
+                                <link>http://japesinator.github.io//2014/10/03/types_as_tests/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/10/03/types_as_tests/</guid>
                         </item>
                 
                         <item>
@@ -203,8 +203,8 @@
 &lt;p&gt;This makes our initial question of the behavior of the two &lt;code&gt;all&lt;/code&gt;s much simpler.  One returns either True or False, and the other returns either &lt;code&gt;Yes&lt;/code&gt; or &lt;code&gt;No&lt;/code&gt;, but the second provides a reason for the returned value that can be used to reason about the behavior of the program in general and guarantee certain behaviors.&lt;/p&gt;
 </description>
                                 <pubDate>Tue, 30 Sep 2014 00:00:00 -0500</pubDate>
-                                <link>http://writes.co.de//2014/09/30/a_tale_of_two_alls/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/09/30/a_tale_of_two_alls/</guid>
+                                <link>http://japesinator.github.io//2014/09/30/a_tale_of_two_alls/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/09/30/a_tale_of_two_alls/</guid>
                         </item>
                 
                         <item>
@@ -247,8 +247,8 @@
 &lt;p&gt;Clearly, there&amp;#39;s still work to be done even on the definition of equality, but the fundamental principles are sound, and hopefully similar tactics can be used on a larger scale to prove time-constancy for things like RSA and AES where that&amp;#39;s actually really important.&lt;/p&gt;
 </description>
                                 <pubDate>Mon, 29 Sep 2014 00:00:00 -0500</pubDate>
-                                <link>http://writes.co.de//2014/09/29/proving_time_constancy_of_equality/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/09/29/proving_time_constancy_of_equality/</guid>
+                                <link>http://japesinator.github.io//2014/09/29/proving_time_constancy_of_equality/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/09/29/proving_time_constancy_of_equality/</guid>
                         </item>
                 
                         <item>
@@ -266,8 +266,8 @@
 &lt;p&gt;So essentially, I&amp;#39;ve been really busy, but for good reasons, and I&amp;#39;ll post more soon.&lt;/p&gt;
 </description>
                                 <pubDate>Sat, 22 Feb 2014 00:00:00 -0600</pubDate>
-                                <link>http://writes.co.de//2014/02/22/update/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/02/22/update/</guid>
+                                <link>http://japesinator.github.io//2014/02/22/update/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/02/22/update/</guid>
                         </item>
                 
                         <item>
@@ -311,8 +311,8 @@
 &lt;p&gt;I suppose I didn&amp;#39;t really &lt;em&gt;learn&lt;/em&gt; this, since I had known it before, but the actual writing of the code for this project was one of the most enjoyable things I had done in a while.&lt;/p&gt;
 </description>
                                 <pubDate>Mon, 27 Jan 2014 00:00:00 -0600</pubDate>
-                                <link>http://writes.co.de//2014/01/27/things_learned_trapifying/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/01/27/things_learned_trapifying/</guid>
+                                <link>http://japesinator.github.io//2014/01/27/things_learned_trapifying/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/01/27/things_learned_trapifying/</guid>
                         </item>
                 
                         <item>
@@ -357,8 +357,8 @@
 &lt;p&gt;One of the reasons I love Haskell is that it&amp;#39;s possible to write an AI for a complex board game in four relatively simple lines of code, and that the way the algorithm plays set is more or less the same way I do.&lt;/p&gt;
 </description>
                                 <pubDate>Thu, 23 Jan 2014 00:00:00 -0600</pubDate>
-                                <link>http://writes.co.de//2014/01/23/on_set/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/01/23/on_set/</guid>
+                                <link>http://japesinator.github.io//2014/01/23/on_set/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/01/23/on_set/</guid>
                         </item>
                 
                         <item>
@@ -481,8 +481,8 @@
 &lt;/ul&gt;
 </description>
                                 <pubDate>Tue, 21 Jan 2014 00:00:00 -0600</pubDate>
-                                <link>http://writes.co.de//2014/01/21/bitwise_galois/</link>
-                                <guid isPermaLink="true">http://writes.co.de//2014/01/21/bitwise_galois/</guid>
+                                <link>http://japesinator.github.io//2014/01/21/bitwise_galois/</link>
+                                <guid isPermaLink="true">http://japesinator.github.io//2014/01/21/bitwise_galois/</guid>
                         </item>
                 
         </channel>

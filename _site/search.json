@@ -1,0 +1,75 @@
+[
+  
+    {
+      "title"    : "Let&#39;s Write a Monad in Idris!",
+      "category" : "",
+      "tags"     : "Idris, and Haskell",
+      "url"      : "/2014/10/24/lets_write_a_monad_in_idris/",
+      "date"     : "2014-10-24 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "Stacked Type Signatures",
+      "category" : "",
+      "tags"     : "practices",
+      "url"      : "/2014/10/16/stacked_type_signatures/",
+      "date"     : "2014-10-16 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "Types as Tests",
+      "category" : "",
+      "tags"     : "idris",
+      "url"      : "/2014/10/03/types_as_tests/",
+      "date"     : "2014-10-03 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "A Tale of Two Alls",
+      "category" : "",
+      "tags"     : "haskell, and idris",
+      "url"      : "/2014/09/30/a_tale_of_two_alls/",
+      "date"     : "2014-09-30 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "Proving Time-Constancy of Equality",
+      "category" : "",
+      "tags"     : "crypto, and idris",
+      "url"      : "/2014/09/29/proving_time_constancy_of_equality/",
+      "date"     : "2014-09-29 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "A Personal Update",
+      "category" : "",
+      "tags"     : "personal, and miscellaneous",
+      "url"      : "/2014/02/22/update/",
+      "date"     : "2014-02-22 00:00:00 -0600"
+    } ,
+  
+    {
+      "title"    : "Things I Learned Writing Trapifier.py",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/2014/01/27/things_learned_trapifying/",
+      "date"     : "2014-01-27 00:00:00 -0600"
+    } ,
+  
+    {
+      "title"    : "On Set",
+      "category" : "",
+      "tags"     : "math,, games,, and Haskell",
+      "url"      : "/2014/01/23/on_set/",
+      "date"     : "2014-01-23 00:00:00 -0600"
+    } ,
+  
+    {
+      "title"    : "Bitwise Galois Arithmetic",
+      "category" : "",
+      "tags"     : "crypto,, python,, and math",
+      "url"      : "/2014/01/21/bitwise_galois/",
+      "date"     : "2014-01-21 00:00:00 -0600"
+    } 
+  
+]

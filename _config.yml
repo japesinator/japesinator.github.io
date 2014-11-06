@@ -18,3 +18,5 @@ urls:
       url: https://twitter.com/japesinator
     - text: about
       url: /about
+    - text: search
+      url: /search

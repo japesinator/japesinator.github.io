@@ -51,13 +51,38 @@
 <div class="content">
 	<div class="post"><h1>A Tale of Two Alls</h1>
 
-<p>One of my favorite parts of programming in strongly typed languages is the ability to use the type signature of a function to figure out what it does.  For instance, <code>:t map</code> returns either <code>map :: (a -&gt; b) -&gt; [a] -&gt; [b]</code> in Haskell, or <code>Prelude.Functor.map : Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</code> in idris, both of which make it relatively clear how map works (provided, in the case of idris, you&#39;re at least moderately familiar with what a functor is.)  Both <a href="http://projects.haskell.org/haskellmode-vim/">haskellmode-vim</a> and <a href="https://github.com/idris-hackers/idris-vim">idris-vim</a> make it very easy to check types from inside the editor.</p>
+<p>One of my favorite parts of programming in strongly typed languages is the
+ ability to use the type signature of a function to figure out what it does.
+ For instance, <code>:t map</code> returns either <code>map :: (a -&gt; b) -&gt; [a] -&gt; [b]</code> in
+ Haskell, or <code>Prelude.Functor.map : Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</code> in
+ idris, both of which make it relatively clear how map works (provided, in the
+ case of idris, you&#39;re at least moderately familiar with what a functor is.)
+ Both <a href="http://projects.haskell.org/haskellmode-vim/">haskellmode-vim</a> and
+ <a href="https://github.com/idris-hackers/idris-vim">idris-vim</a> make it very easy to
+ check types from inside the editor.</p>
 
-<p>Recently when I was working on a <a href="http://writes.co.de/2014/09/29/proving_time_constancy_of_equality/">project of mine</a> I came across two different <code>all</code>s in idris.  One is quite intuitive and has type of <code>Prelude.Foldable.all : Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool</code>, which is quite similar to Haskell&#39;s all, which has a type of <code>all :: (a -&gt; Bool) -&gt; [a] -&gt; Bool</code>, but another one has a type of <code>Data.Vect.Quantifiers.all : ((x : a) -&gt; Dec (P x)) -&gt; (xs : Vect n a) -&gt; Dec (All P xs)</code>.  Yet more confusing is the fact that in idris, <code>:t All</code> (with a capital &#39;A&#39;) returns <code>Data.Vect.Quantifiers.All : (a -&gt; Type) -&gt; Vect n a -&gt; Type</code>.</p>
+<p>Recently when I was working on a <a href="http://writes.co.de/2014/09/29/proving_time_constancy_of_equality/">project of
+mine</a> I
+ came across two different <code>all</code>s in idris.  One is quite intuitive and has
+ type of <code>Prelude.Foldable.all : Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool</code>,
+ which is quite similar to Haskell&#39;s all, which has a type of <code>all :: (a -&gt;
+ Bool) -&gt; [a] -&gt; Bool</code>, but another one has a type of
+ <code>Data.Vect.Quantifiers.all : ((x : a) -&gt; Dec (P x)) -&gt; (xs : Vect n a) -&gt; Dec
+ (All P xs)</code>.  Yet more confusing is the fact that in idris, <code>:t All</code> (with a
+ capital &#39;A&#39;) returns <code>Data.Vect.Quantifiers.All : (a -&gt; Type) -&gt; Vect n a -&gt;
+ Type</code>.</p>
 
-<p>After finding this, I was fairly confused, as my intuitive understanding of <code>all</code> was that it should take a list-like group of items and return a Boolean representing whether they all have some certain property.  This absolutely makes sense in with the <code>all</code> defined in Prelude.Foldable and Haskell&#39;s all, but the difference between <code>Type</code>, <code>Dec (All P xs)</code>, and a <code>Bool</code> seemed hard to reconcile to me.</p>
+<p>After finding this, I was fairly confused, as my intuitive understanding of
+ <code>all</code> was that it should take a list-like group of items and return a Boolean
+ representing whether they all have some certain property.  This absolutely
+ makes sense in with the <code>all</code> defined in Prelude.Foldable and Haskell&#39;s all,
+ but the difference between <code>Type</code>, <code>Dec (All P xs)</code>, and a <code>Bool</code> seemed hard
+ to reconcile to me.</p>
 
-<p>Doing some more analysis, I decided to start by picking apart <code>Dec (All P xs)</code>.  <code>:t Dec</code> shows <code>Prelude.Basics.Dec : Type -&gt; Type</code> shows that apparently <code>Dec</code> is a function from a Type to a Type, which isn&#39;t necessarily helpful by itself, but <code>:doc Dec</code> actually is, returning:</p>
+<p>Doing some more analysis, I decided to start by picking apart <code>Dec (All P xs)</code>.
+  <code>:t Dec</code> shows <code>Prelude.Basics.Dec : Type -&gt; Type</code> shows that apparently
+ <code>Dec</code> is a function from a Type to a Type, which isn&#39;t necessarily helpful by
+ itself, but <code>:doc Dec</code> actually is, returning:</p>
 
 <div class="highlight"><pre><code class="language-lidr" data-lang="lidr"><span class="lineno"> 1</span> Data type
 <span class="lineno"> 2</span> <span class="cs">&gt; </span><span class="nf">Dec</span> <span class="ow">:</span> <span class="kt">Type</span> <span class="ow">-&gt;</span> <span class="kt">Type</span>
@@ -75,12 +100,23 @@
 <span class="lineno">14</span>         Arguments:
 <span class="lineno">15</span> <span class="cs">&gt; </span><span class="nf">contra</span> <span class="ow">:</span> <span class="kt">A</span> <span class="ow">-&gt;</span> <span class="kr">_</span><span class="ow">|</span><span class="kr">_</span>  <span class="c1">-- a demonstration that A would be a contradiction</span></code></pre></div>
 
-<p>Now we&#39;re getting somewhere.  <code>Dec</code> takes as a parameter a type, but since this is idris, types and propositions are the same thing, and <code>Dec</code> just states that either the proposition holds or doesn&#39;t.  Since the proposition is either true (it can be shown to hold in this case) or false (it implies a contradiction if true), <code>Dec</code> will return either <code>Yes</code> or <code>No</code>.  This is quite similar to a standard Bool, but arguably more useful in that it can speak about general cases and also state both whether the given statement is true or false, but also in some sense why.  For instance idris defines a class <code>DecEq</code> as:</p>
+<p>Now we&#39;re getting somewhere.  <code>Dec</code> takes as a parameter a type, but since this
+ is idris, types and propositions are the same thing, and <code>Dec</code> just states
+ that either the proposition holds or doesn&#39;t.  Since the proposition is either
+ true (it can be shown to hold in this case) or false (it implies a
+ contradiction if true), <code>Dec</code> will return either <code>Yes</code> or <code>No</code>.  This is quite
+ similar to a standard Bool, but arguably more useful in that it can speak
+ about general cases and also state both whether the given statement is true or
+ false, but also in some sense why.  For instance idris defines a class <code>DecEq</code>
+ as:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">class</span> <span class="kt">DecEq</span> t <span class="kr">where</span>
 <span class="lineno">2</span>   <span class="kr">total</span> decEq <span class="ow">:</span> <span class="ow">(</span>x1 <span class="ow">:</span> t<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="ow">(</span>x2 <span class="ow">:</span> t<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Dec</span> <span class="ow">(</span>x1 <span class="ow">=</span> x2<span class="ow">)</span></code></pre></div>
 
-<p>In some sense this serves the same purpose as <code>(==)</code> (which has a type of <code>Prelude.Classes.(==) : Eq a =&gt; a -&gt; a -&gt; Bool</code> in idris), but because <code>(==)</code> returns a <code>Bool</code>, it can only tell us whether two things are equal, whereas <code>DecEq</code> can tell us <em>why</em> two things are equal.</p>
+<p>In some sense this serves the same purpose as <code>(==)</code> (which has a type of
+ <code>Prelude.Classes.(==) : Eq a =&gt; a -&gt; a -&gt; Bool</code> in idris), but because <code>(==)</code>
+ returns a <code>Bool</code>, it can only tell us whether two things are equal, whereas
+ <code>DecEq</code> can tell us <em>why</em> two things are equal.</p>
 
 <p>In fact, <code>DecEq</code> is actually defined on Bools in Decidable.Equality as:</p>
 
@@ -93,7 +129,8 @@
 <span class="lineno">7</span>   decEq <span class="kt">True</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">No</span> trueNotFalse
 <span class="lineno">8</span>   decEq <span class="kt">False</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">No</span> <span class="ow">(</span>negEqSym trueNotFalse<span class="ow">)</span></code></pre></div>
 
-<p>Note the difference between this and the definition of <code>Eq</code> for Bools, which is simply:</p>
+<p>Note the difference between this and the definition of <code>Eq</code> for Bools, which is
+ simply:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">instance</span> <span class="kt">Eq</span> <span class="kt">Bool</span> <span class="kr">where</span>
 <span class="lineno">2</span>   <span class="kt">True</span> <span class="ow">==</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">True</span>
@@ -101,7 +138,10 @@
 <span class="lineno">4</span>   <span class="kt">False</span> <span class="ow">==</span> <span class="kt">True</span> <span class="ow">=</span> <span class="kt">False</span>
 <span class="lineno">5</span>   <span class="kt">False</span> <span class="ow">==</span> <span class="kt">False</span> <span class="ow">=</span> <span class="kt">True</span></code></pre></div>
 
-<p>The crucial difference between the two is that while <code>True == False = False</code> says that True and False <em>are not</em> equal, <code>decEq True False = No trueNotFalse</code> says True and False <em>cannot</em> be equal.  Back to the case of lists, if we look at the definitions of <code>All</code> and <code>all</code>, we find:</p>
+<p>The crucial difference between the two is that while <code>True == False = False</code>
+ says that True and False <em>are not</em> equal, <code>decEq True False = No trueNotFalse</code>
+ says True and False <em>cannot</em> be equal.  Back to the case of lists, if we look
+ at the definitions of <code>All</code> and <code>all</code>, we find:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno"> 1</span> <span class="kr">data</span> <span class="kt">All</span> <span class="ow">:</span> <span class="ow">(</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Vect</span> n a <span class="ow">-&gt;</span> <span class="kt">Type</span> <span class="kr">where</span>
 <span class="lineno"> 2</span>   <span class="nf">Nil</span> <span class="ow">:</span> <span class="ow">{</span><span class="kt">P</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">}</span> <span class="ow">-&gt;</span> <span class="kt">All</span> <span class="kt">P</span> <span class="kt">Nil</span>
@@ -124,11 +164,36 @@
 <span class="lineno">19</span>     <span class="kt">Yes</span> prf&#39; <span class="ow">=&gt;</span> <span class="kt">Yes</span> <span class="ow">(</span>prf <span class="ow">::</span> prf&#39;<span class="ow">)</span>
 <span class="lineno">20</span>     <span class="kt">No</span> prf&#39; <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(</span>notAllThere prf&#39;<span class="ow">)</span></code></pre></div>
 
-<p>This is now much clearer (at least to me.) <code>all</code> takes a proposition, a way to verify that proposition, and a list of things, and returns why the proposition does or doesn&#39;t hold for everything in the list.  It&#39;s the difference between a multiple-choice and short-answer question, in that while they can state the same thing, the answer to one is much more helpful in reasoning about future questions than the other.  While a Bool is fine for simple questions, there&#39;s a lot to be gained from using <code>Dec</code> when it&#39;s practical.</p>
+<p>This is now much clearer (at least to me.) <code>all</code> takes a proposition, a way to
+ verify that proposition, and a list of things, and returns why the proposition
+ does or doesn&#39;t hold for everything in the list.  It&#39;s the difference between
+ a multiple-choice and short-answer question, in that while they can state the
+ same thing, the answer to one is much more helpful in reasoning about future
+ questions than the other.  While a Bool is fine for simple questions, there&#39;s
+ a lot to be gained from using <code>Dec</code> when it&#39;s practical.</p>
 
-<p>One of the more interesting applications for this is <a href="https://github.com/Ralith/quasigroup-completion">this quasigroup completion solver</a>, later adapted to a benchmark of idris itself.  A quasigroup is just a set for and an operation such that each element of the set appears exactly once in each row and column of the <a href="https://en.wikipedia.org/wiki/Cayley_table">Cayley Table</a> generated from the elements in the set and the operation.  This property also means that the quasigroup completion problem is often referred to as the Latin Square problem, since said Cayley table is also a <a href="https://en.wikipedia.org/wiki/Latin_square">Latin Square</a> by definition.  It is a common combinatorial problem to take a given partially filled Latin Square and complete it in a way consistent with the definition.  This process is actually quite similar to sudoku, where a grid of spaces that are either empty or containing a value are given, and the goal is to fill in the empty squares so that the same number does not appear twice in any row or column.  Of course, quasigroup completion is a more general and abstract problem, but the fundamental process is the same.</p>
+<p>One of the more interesting applications for this is <a href="https://github.com/Ralith/quasigroup-completion">this quasigroup
+ completion solver</a>, later
+ adapted to a benchmark of idris itself.  A quasigroup is just a set for and an
+ operation such that each element of the set appears exactly once in each row
+ and column of the <a href="https://en.wikipedia.org/wiki/Cayley_table">Cayley Table</a>
+ generated from the elements in the set and the operation.  This property also
+ means that the quasigroup completion problem is often referred to as the Latin
+ Square problem, since said Cayley table is also a <a href="https://en.wikipedia.org/wiki/Latin_square">Latin
+ Square</a> by definition.  It is a
+ common combinatorial problem to take a given partially filled Latin Square and
+ complete it in a way consistent with the definition.  This process is actually
+ quite similar to sudoku, where a grid of spaces that are either empty or
+ containing a value are given, and the goal is to fill in the empty squares so
+ that the same number does not appear twice in any row or column.  Of course,
+ quasigroup completion is a more general and abstract problem, but the
+ fundamental process is the same.</p>
 
-<p>The solver shown uses the Data.Vect.Quantifier version of <code>all</code> to reason about things like whether given rows and columns are &quot;safe&quot; to place an element in, perhaps most notably in the definition of legalVal, which is used to evaluate whether a given cell assignment is &quot;legal&quot; with regard to the definition of quasigroup.</p>
+<p>The solver shown uses the Data.Vect.Quantifier version of <code>all</code> to reason about
+ things like whether given rows and columns are &quot;safe&quot; to place an element in,
+ perhaps most notably in the definition of legalVal, which is used to evaluate
+ whether a given cell assignment is &quot;legal&quot; with regard to the definition of
+ quasigroup.</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno"> 1</span> <span class="nf">LegalVal</span> <span class="ow">:</span> <span class="kt">Board</span> n <span class="ow">-&gt;</span> <span class="ow">(</span><span class="kt">Fin</span> n, <span class="kt">Fin</span> n<span class="ow">)</span> <span class="ow">-&gt;</span> <span class="kt">Fin</span> n <span class="ow">-&gt;</span> <span class="kt">Type</span>
 <span class="lineno"> 2</span> <span class="kt">LegalVal</span> b <span class="ow">(</span>x, y<span class="ow">)</span> val <span class="ow">=</span> <span class="ow">(</span><span class="kt">Empty</span> <span class="ow">(</span>getCell b <span class="ow">(</span>x, y<span class="ow">))</span>, <span class="kt">All</span> <span class="ow">(</span><span class="kt">LegalNeighbors</span> <span class="ow">(</span><span class="kt">Just</span> val<span class="ow">))</span> <span class="ow">(</span>getCol x b<span class="ow">)</span>, <span class="kt">All</span> <span class="ow">(</span><span class="kt">LegalNeighbors</span> <span class="ow">(</span><span class="kt">Just</span> val<span class="ow">))</span> <span class="ow">(</span>getRow y b<span class="ow">))</span>
@@ -145,9 +210,22 @@
 <span class="lineno">13</span>       <span class="kt">No</span> prf&#39;&#39; <span class="ow">=&gt;</span> <span class="kt">No</span> <span class="ow">(\(</span>ef, <span class="kr">_</span>, <span class="kr">_</span><span class="ow">)</span> <span class="ow">=&gt;</span> prf&#39;&#39; ef<span class="ow">)</span>
 <span class="lineno">14</span>       <span class="kt">Yes</span> prf&#39;&#39; <span class="ow">=&gt;</span> <span class="kt">Yes</span> <span class="ow">(</span>prf&#39;&#39;, prf&#39;, prf<span class="ow">)</span></code></pre></div>
 
-<p>In the definition of <code>legalVal</code>, <code>prf</code>, <code>prf&#39;</code>, and <code>prf&#39;&#39;</code> all refer to proofs of the &quot;safety&quot; of the given value at the given coordinates with respect to its row, column, and occupancy status.  This allows <code>LegalVal</code> to be a type that only represents legal values, and thus guarantee that functions using that type can only ever give legal values, because otherwise the program would type check.  Not that this is totally impossible in a language like Haskell with no dependant types, as you cannot have a function like <code>LegalVal</code> to a type, and hence the type cannot <em>depend</em> on parameters that aren&#39;t other types, and hence can&#39;t carry guarantees about them like in a language like idris.</p>
+<p>In the definition of <code>legalVal</code>, <code>prf</code>, <code>prf&#39;</code>, and <code>prf&#39;&#39;</code> all refer to proofs
+ of the &quot;safety&quot; of the given value at the given coordinates with respect to
+ its row, column, and occupancy status.  This allows <code>LegalVal</code> to be a type
+ that only represents legal values, and thus guarantee that functions using
+ that type can only ever give legal values, because otherwise the program would
+ type check.  Not that this is totally impossible in a language like Haskell
+ with no dependant types, as you cannot have a function like <code>LegalVal</code> to a
+ type, and hence the type cannot <em>depend</em> on parameters that aren&#39;t other
+ types, and hence can&#39;t carry guarantees about them like in a language like
+ idris.</p>
 
-<p>This makes our initial question of the behavior of the two <code>all</code>s much simpler.  One returns either True or False, and the other returns either <code>Yes</code> or <code>No</code>, but the second provides a reason for the returned value that can be used to reason about the behavior of the program in general and guarantee certain behaviors.</p>
+<p>This makes our initial question of the behavior of the two <code>all</code>s much simpler.
+  One returns either True or False, and the other returns either <code>Yes</code> or <code>No</code>,
+ but the second provides a reason for the returned value that can be used to
+ reason about the behavior of the program in general and guarantee certain
+ behaviors.</p>
 </div>
 </div>
 

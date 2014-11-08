@@ -51,9 +51,21 @@
 <div class="content">
 	<div class="post"><h1>Let&#39;s Write a Monad in Idris!</h1>
 
-<p>To preface this, I&#39;m not writing another monad tutorial.  There&#39;s a (not-too-far-from-the-truth) stereotype that every Haskell programmer writes their own terrible monad tutorial that I do not intend to perpetuate, and if you really want to learn monads, I would recommend first reading the excellent <a href="http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html">You Could Have Invented Monads</a> and then writing a bunch of monadic code (Note: the second part of this is much more important than the first.)  This instead assumes you have a basic idea of what a monad is, and want to get started using them in Idris.</p>
+<p>To preface this, I&#39;m not writing another monad tutorial.  There&#39;s a
+(not-too-far-from-the-truth) stereotype that every Haskell programmer writes
+their own terrible monad tutorial that I do not intend to perpetuate, and if
+you really want to learn monads, I would recommend first reading the excellent
+<a href="http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html">You Could Have Invented
+Monads</a>
+and then writing a bunch of monadic code (Note: the second part of this is much
+more important than the first.)  This instead assumes you have a basic idea of
+what a monad is, and want to get started using them in Idris.</p>
 
-<p>Whenever I personally am getting started with a new topic in Idris (or most languages, really) I start by playing around with it in the REPL. <code>:t Monad</code> is the expression to get the type of <code>Monad</code>, and this returns <code>Prelude.Monad.Monad : (Type -&gt; Type) -&gt; Type</code>.  <code>:doc Monad</code> is slightly more helpful, returning</p>
+<p>Whenever I personally am getting started with a new topic in Idris (or most
+languages, really) I start by playing around with it in the REPL. <code>:t Monad</code> is
+the expression to get the type of <code>Monad</code>, and this returns
+<code>Prelude.Monad.Monad : (Type -&gt; Type) -&gt; Type</code>.  <code>:doc Monad</code> is slightly more
+helpful, returning</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="kt">Type</span> <span class="kr">class</span> <span class="kt">Monad</span>
 
@@ -75,25 +87,52 @@
     <span class="kt">Monad</span> <span class="ow">(</span><span class="kt">Vect</span> n<span class="ow">)</span>
     <span class="kt">Monad</span> <span class="kt">Stream</span></code></pre></div>
 
-<p>The most interesting thing that I personally found here is that Idris only requires one operator (<code>&gt;&gt;=</code>) to declare an instance of <code>Monad</code>.  This is a far cry from the Haskell I learned about monads from, which requires <code>&gt;&gt;=</code>, <code>&gt;&gt;</code>, <code>return</code>, and <code>fail</code> to be defined on anything you want to make a monad.  Curious, I went to the <a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Monad.idr">source code</a> to learn a bit more about how exactly one can do the work of four functions with only one.  The actual definition of <code>Monad</code> there is quite interesting:</p>
+<p>The most interesting thing that I personally found here is that Idris only
+requires one operator (<code>&gt;&gt;=</code>) to declare an instance of <code>Monad</code>.  This is a far
+cry from the Haskell I learned about monads from, which requires <code>&gt;&gt;=</code>, <code>&gt;&gt;</code>,
+<code>return</code>, and <code>fail</code> to be defined on anything you want to make a monad. 
+Curious, I went to the
+<a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Monad.idr">source
+code</a>
+to learn a bit more about how exactly one can do the work of four functions
+with only one.  The actual definition of <code>Monad</code> there is quite interesting:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="kr">class</span> <span class="kt">Applicative</span> m <span class="ow">=&gt;</span> <span class="kt">Monad</span> <span class="ow">(</span>m <span class="ow">:</span> <span class="kt">Type</span> <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">)</span> <span class="kr">where</span>
 <span class="ow">(&gt;&gt;=)</span> <span class="ow">:</span> m a <span class="ow">-&gt;</span> <span class="ow">(</span>a <span class="ow">-&gt;</span> m b<span class="ow">)</span> <span class="ow">-&gt;</span> m b</code></pre></div>
 
-<p>In Idris, monads are a kind of applicatives!  This actually makes a lot of sense from a category theory perspective, as monads are actually applicative, but is still slightly surprising.  Since we&#39;re already looking around in Idris&#39; source code, we may as well look at <a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Applicative.idr">the source for <code>Applicative</code></a> which defines <code>Applicative</code> as:</p>
+<p>In Idris, monads are a kind of applicatives!  This actually makes a lot of
+sense from a category theory perspective, as monads are actually applicative,
+but is still slightly surprising.  Since we&#39;re already looking around in Idris&#39;
+source code, we may as well look at <a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Applicative.idr">the source for
+<code>Applicative</code></a>
+which defines <code>Applicative</code> as:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="kr">class</span> <span class="kt">Functor</span> f <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="ow">(</span>f <span class="ow">:</span> <span class="kt">Type</span> <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">)</span> <span class="kr">where</span>
 <span class="nf">pure</span> <span class="ow">:</span> a <span class="ow">-&gt;</span> f a
 <span class="ow">(&lt;$&gt;)</span> <span class="ow">:</span> f <span class="ow">(</span>a <span class="ow">-&gt;</span> b<span class="ow">)</span> <span class="ow">-&gt;</span> f a <span class="ow">-&gt;</span> f b</code></pre></div>
 
-<p>Notably, <code>Applicative</code> itself is a subclass of <code>Functor</code>, which also makes sense (an applicative is literally just a functor with application), and looking at one more <a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Functor.idr">bit of the source</a> we can finally see all the stuff that goes into being a monad in Idris:</p>
+<p>Notably, <code>Applicative</code> itself is a subclass of <code>Functor</code>, which also makes
+sense (an applicative is literally just a functor with application), and
+looking at one more <a href="https://github.com/Idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Functor.idr">bit of the
+source</a>
+we can finally see all the stuff that goes into being a monad in Idris:</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">class</span> <span class="kt">Functor</span> <span class="ow">(</span>f <span class="ow">:</span> <span class="kt">Type</span> <span class="ow">-&gt;</span> <span class="kt">Type</span><span class="ow">)</span> <span class="kr">where</span>
 <span class="lineno">2</span> <span class="nf">map</span> <span class="ow">:</span> <span class="ow">(</span>m <span class="ow">:</span> a <span class="ow">-&gt;</span> b<span class="ow">)</span> <span class="ow">-&gt;</span> f a <span class="ow">-&gt;</span> f b</code></pre></div>
 
-<p>A few things immediately become a bit clearer now that we can see how to declare a function from a type to a type a monad from start to finish.  First, there actually are four operations that any monad has to have defined (<code>map</code> from <code>Functor</code>, <code>pure</code> and <code>&lt;$&gt;</code> from <code>Applicative</code>, and <code>&gt;&gt;=</code> from <code>Monad</code>).  While those aren&#39;t the same four as Haskell, they&#39;re roughly equivalent.<code>return</code> is just <code>pure</code>, <code>&gt;&gt;</code> is quite easy to rewrite if you should want it (it&#39;s a specific case of <code>$&gt;</code>, which is defined in <code>Prelude.Applicative</code>)(and not necessary for being a monad, technically speaking), and <code>fail</code> is actually not even part of the definition of a monad, and is just useful for graceful failure in pattern-matchy <code>do</code> expressions.</p>
+<p>A few things immediately become a bit clearer now that we can see how to
+declare a function from a type to a type a monad from start to finish.  First,
+there actually are four operations that any monad has to have defined (<code>map</code>
+from <code>Functor</code>, <code>pure</code> and <code>&lt;$&gt;</code> from <code>Applicative</code>, and <code>&gt;&gt;=</code> from <code>Monad</code>).
+While those aren&#39;t the same four as Haskell, they&#39;re roughly
+equivalent.<code>return</code> is just <code>pure</code>, <code>&gt;&gt;</code> is quite easy to rewrite if you should
+want it (it&#39;s a specific case of <code>$&gt;</code>, which is defined in
+<code>Prelude.Applicative</code>)(and not necessary for being a monad, technically
+speaking), and <code>fail</code> is actually not even part of the definition of a monad,
+and is just useful for graceful failure in pattern-matchy <code>do</code> expressions.</p>
 
-<p>Just to ensure that I truly understood Monads in Idris, I decided to rewrite <code>Maybe</code>.  In Haskell, for comparison:</p>
+<p>Just to ensure that I truly understood Monads in Idris, I decided to rewrite
+<code>Maybe</code>.  In Haskell, for comparison:</p>
 
 <div class="highlight"><pre><code class="language-haskell" data-lang="haskell"><span class="lineno"> 1</span> <span class="kr">data</span> <span class="kt">Maybe</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Nothing</span>
 <span class="lineno"> 2</span>              <span class="o">|</span> <span class="kt">Just</span> <span class="n">a</span>
@@ -108,12 +147,16 @@
 <span class="lineno">11</span>     <span class="n">return</span>              <span class="ow">=</span> <span class="kt">Just</span>
 <span class="lineno">12</span>     <span class="n">fail</span> <span class="kr">_</span>              <span class="ow">=</span> <span class="kt">Nothing</span></code></pre></div>
 
-<p>First, <code>Maybe</code> is defined and then an instance of <code>Monad</code> is written for it.  In <code>Idris</code>, we start the same way, by defining the type (or function to a type, really):</p>
+<p>First, <code>Maybe</code> is defined and then an instance of <code>Monad</code> is written for it.
+In <code>Idris</code>, we start the same way, by defining the type (or function to a type,
+really):</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">data</span> <span class="kt">Maybe</span> a <span class="ow">=</span> <span class="kt">Nothing</span>
 <span class="lineno">2</span>              <span class="ow">|</span> <span class="kt">Just</span> a</code></pre></div>
 
-<p>So far, this is exactly the same.  However, in Idris, before we can declare our instance of <code>Monad</code> we need an instance of <code>Applicative</code>, for which we need an instance of <code>Functor</code>.</p>
+<p>So far, this is exactly the same.  However, in Idris, before we can declare our
+instance of <code>Monad</code> we need an instance of <code>Applicative</code>, for which we need an
+instance of <code>Functor</code>.</p>
 
 <div class="highlight"><pre><code class="language-idris" data-lang="idris"><span class="lineno">1</span> <span class="kr">instance</span> <span class="kt">Functor</span> <span class="kt">Maybe</span> <span class="kr">where</span>
 <span class="lineno">2</span>     map f <span class="ow">(</span><span class="kt">Just</span> x<span class="ow">)</span> <span class="ow">=</span> <span class="kt">Just</span> <span class="ow">(</span>f x<span class="ow">)</span>

@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "The 2014 Smith Family Christmas Letter",
+      "category" : "",
+      "tags"     : "humor",
+      "url"      : "/2014/11/22/christmas_letter/",
+      "date"     : "2014-11-22 00:00:00 -0600"
+    } ,
+  
+    {
       "title"    : "Let&#39;s Write a Monad in Idris!",
       "category" : "",
       "tags"     : "Idris, and Haskell",

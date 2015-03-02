@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title> As Little Technology as Possible </title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+      <div id="container">
+
+        <div class="left">
+          <h1>JP Writes Code</h1>
+          <img id="about" src="/img/logo.png" height="75px" width="75px" /><br />	
+
+          <strong>navigation</strong><br />
+          <a href="/">home</a> <br />
+          
+          <a class="about" href="https://github.com/japesinator">github</a><br />
+          
+          <a class="about" href="mailto:jp@writes.co.de">email</a><br />
+          
+          <a class="about" href="https://twitter.com/japesinator">twitter</a><br />
+          
+          <a class="about" href="/about">about</a><br />
+          
+          <a class="about" href="/search">search</a><br />
+          
+
+          
+          <div id="about">
+            <strong>about</strong><br />
+            I am a high school student in the midwest who likes math, computers, and other interesting things
+          </div>
+          
+        </div>
+
+        <div class="right">
+
+          <h1>As Little Technology as Possible</h1>
+<span class="time">02 Mar 2015</span>
+
+<div class="content">
+	<div class="post"><h1>As Little Technology as Possible</h1>
+
+<h2><em>or</em> How to Turn a Pathological Hatred of Technology Into a Hackathon Victory</h2>
+
+<p>This past weekend, my friend and I went to
+<a href="http://www.hackillinois.org/">HackIllinois</a> in search of fame, glory, and
+ideally free T-Shirts. The event was great, the people were awesome, and there
+were indeed free T-Shirts (I think I got 15 or so).</p>
+
+<p>We decided that we would try for the reverse-engineering prize
+<a href="https://www.affirm.com/">Affirm</a> was offering, because security is cool, and
+since we run a security club together, anything sufficiently cool that we built,
+we could use in real life. We put aside our initial idea of &quot;Tinder, but for
+drones&quot;, and decided to build something like
+<a href="http://www.codecademy.com/">Codecademy</a>, but for reversing. The general idea
+was that the user could log in, and, inside of a couple clicks, start
+interactively using real tools in a guided way.</p>
+
+<p>We knew that the implementation would be tricky. We wanted people to work on
+our project in a command-line environment, because we wanted things like
+<code>strings checker | grep &quot;password&quot;</code> to work, but we knew that giving people
+arbitrary command execution on our system could lead to some bad things. Like the
+responsible security professionals we are, we solved this problem by pretending
+bad things don&#39;t exist and agreeing to add jails or something at a future point.</p>
+
+<p>Having started off with a decision as good as that, all we had to do for our
+webapp was set up some kind of user system and have people SSH into it.
+<a href="https://github.com/liftoff/GateOne">GateOne</a> solved that for us, leaving our
+most complicated web task using <a href="http://jekyllrb.com/">jekyll</a> to build a static
+landing page and letting us spend the weekend focusing on backend.</p>
+
+<p>Backend engineering had some obvious challenges. Users had to each have their
+own shell, have some kind of guidance, and ideally a &quot;level system&quot; that would
+reveal more to them as they progressed. We considered and analyzed a wide
+variety of options (Docker, Puppet, Ansible, Chef), all of which were designed
+with problems like this in mind, but realized that both of us more or less hate
+technology, and as such, would prefer to use shell scripts for everything.</p>
+
+<p>As a result, our system was designed as follows:</p>
+
+<p>1: User logs in to an account called <code>jump_user</code></p>
+
+<p>2: When they log in, the <code>.bashrc</code> file runs a script to create a new user
+     account with a random name, put the appropriate files in it, and switch
+     them over to that account.</p>
+
+<p>3: The user solves the problem.</p>
+
+<p>4: The user runs <code>levelup $PASSWORD</code>, and the same script as in step 2 creates
+     them a new account with the new challenge files.</p>
+
+<p>This system had both advantages and disadvantages. On one hand, configuration
+was dead simple, and portability was easy for any system with bash installed. On
+the other hand, we had as many as 4000 users on a tiny digitalocean box, which
+was aggressively insecure thanks to random additions to the sudoers file and the
+general aforementioned assumption bad things don&#39;t exist.</p>
+
+<p>As luck would have it, people listened to our pleas of &quot;please please please
+don&#39;t be a dick you can totally own us but please don&#39;t&quot;, and the only people
+breaking our system over the weekend were us. Once we had &quot;solved&quot; all of our
+devops problems for the weekend, we could focus on user guidance. We wanted our
+users to be at least sort of guided through the process, ideally in a way that
+paid attention to what they were doing, but monitoring user activity is hard,
+and once again our hatred of technology lead us to a simpler solution, that being
+the <code>alias</code> command.</p>
+
+<p>We accomplished our entire user guidance system with a combination of <code>echo</code>
+commands in the aforementioned <code>.bashrc</code>s and aliases, as shown below.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="lineno">1</span> lsfun <span class="o">()</span> <span class="o">{</span>
+<span class="lineno">2</span>   <span class="nb">unalias </span>ls
+<span class="lineno">3</span>     <span class="nb">echo</span> <span class="s2">&quot;You see a list of files, reproduced below. You&#39;re slightly curious as&quot;</span><span class="se">\</span>
+<span class="lineno">4</span>     <span class="s2">&quot;to whether the file called \`PASSWORD.txt&#39; could contain anything you&quot;</span><span class="se">\</span>
+<span class="lineno">5</span>     <span class="s2">&quot;might find useful, but you doubt it&quot;</span>
+<span class="lineno">6</span>     <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
+<span class="lineno">7</span>     ls
+<span class="lineno">8</span> <span class="o">}</span>
+<span class="lineno">9</span> <span class="nb">alias </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;lsfun&#39;</span></code></pre></div>
+
+<p>This made for a quite interesting demo day. The judges typically asked &quot;so what
+technology did you use to build this?&quot; and our answer of &quot;shell scripts, mostly&quot;
+contrasted sharply with the more usual &quot;Mongo, Angular, Express, and Node&quot; type
+answers, to the point of occasionally inspiring skepticism.</p>
+
+<p>In the end though, our deliberate apathy towards anything invented after roughly
+1970 paid off though, and (to our slight surprise) we won the prize, so thanks
+to affirm for that.</p>
+
+<p>For those interested, code from the event is scattered across the following
+three github repos.</p>
+
+<ul>
+<li><p><a href="https://github.com/japesinator/gucci">gucci</a></p></li>
+<li><p><a href="https://github.com/japesinator/retro_site">retro</a></p></li>
+<li><p><a href="https://github.com/japesinator/retrogarde">retrogarde</a></p></li>
+</ul>
+</div>
+</div>
+
+
+          <footer>
+             
+            <p>JP Smith made this</p>
+            
+          </footer>
+        </div>
+
+      </div>
+
+    </body>
+</html>

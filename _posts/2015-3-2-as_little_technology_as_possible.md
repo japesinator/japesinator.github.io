@@ -1,7 +1,7 @@
 ---
 layout: post
 title: As Little Technology as Possible
-tags:
+tags: writeup
 ---
 
 As Little Technology as Possible

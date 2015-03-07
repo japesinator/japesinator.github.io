@@ -94,7 +94,7 @@ answers, to the point of occasionally inspiring skepticism.
 
 In the end though, our deliberate apathy towards anything invented after roughly
 1970 paid off though, and (to our slight surprise) we won the prize, so thanks
-to affirm for that.
+to [Affirm](https://www.affirm.com/) for that.
 
 For those interested, code from the event is scattered across the following
 three github repos.

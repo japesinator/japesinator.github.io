@@ -4,9 +4,6 @@ title: As Little Technology as Possible
 tags: writeup
 ---
 
-As Little Technology as Possible
-================================
-
 _or_ How to Turn a Pathological Hatred of Technology Into a Hackathon Victory
 -----------------------------------------------------------------------------
 

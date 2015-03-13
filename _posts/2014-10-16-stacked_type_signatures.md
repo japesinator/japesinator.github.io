@@ -4,9 +4,6 @@ title: Stacked Type Signatures
 tags: practices
 ---
 
-Stacked Type Signatures
-=======================
-
 In general, I greatly prefer programming in functional, strongly-typed
 languages.  I'm currently working on [a
 project](https://github.com/Lopi/HackMan) in [elm](http://elm-lang.org/), [a

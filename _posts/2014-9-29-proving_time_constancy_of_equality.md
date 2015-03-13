@@ -4,9 +4,6 @@ title: Proving Time-Constancy of Equality
 tags: crypto, idris
 ---
 
-Proving Time-Constancy of Equality
-==================================
-
 Lately I've been working with [idris](http://www.idris-lang.org/) a bunch.
 Idris is a purely functional, dependently-typed, programming language, which,
 to quote one of my friends, makes it "Haskell for Haskell people." There are a
@@ -21,7 +18,8 @@ S left = S right
 eqSucc left _ refl = refl
 {% endhighlight %}
 
-The above is a function taken from idris' [prelude](https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude),
+The above is a function taken from idris'
+[prelude](https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude),
 which is the standard library that contains most of the basic functions and
 proofs.  It states that if you have two natural numbers and a proof that they
 are equal, the successor to the first is equal to the successor to the second,

@@ -4,9 +4,6 @@ title: Let's Write a Monad in Idris!
 tags: Idris, Haskell
 ---
 
-Let's Write a Monad in Idris!
-=============================
-
 To preface this, I'm not writing another monad tutorial.  There's a
 (not-too-far-from-the-truth) stereotype that every Haskell programmer writes
 their own terrible monad tutorial that I do not intend to perpetuate, and if

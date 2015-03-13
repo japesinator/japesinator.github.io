@@ -4,9 +4,6 @@ title: Types as Tests
 tags: idris
 ---
 
-Types as Tests
-==============
-
 Recently, a friend of mine and I were going over the ages old tests vs. types
 debate.  Specifically, if a programmer wants to have some degree of certainty
 that their program will function as intended, does it work better to use unit

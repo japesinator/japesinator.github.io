@@ -4,9 +4,6 @@ title: Bitwise Galois Arithmetic
 tags: crypto, python, math
 ---
 
-Bitwise Galois Arithmetic
-=========================
-
 Recently, I began working on implementing AES in python.  My code is largely
 based off of [SlowAES](https://code.google.com/p/slowaes/), but using much more
 in-depth comments, more descriptive variable names, and snake case.  I

@@ -4,9 +4,6 @@ title: A Tale of Two Alls
 tags: haskell, idris
 ---
 
-A Tale of Two Alls
-==================
-
 One of my favorite parts of programming in strongly typed languages is the
  ability to use the type signature of a function to figure out what it does.
  For instance, `:t map` returns either `map :: (a -> b) -> [a] -> [b]` in

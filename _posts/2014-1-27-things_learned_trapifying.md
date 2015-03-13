@@ -3,9 +3,6 @@ title: Things I Learned Writing Trapifier.py
 layout: post
 ---
 
-Things I Learned Writing Trapifier.py
-=====================================
-
 Recently on reddit.com/r/hiphopheads, someone requested that a cover of a John
 Mayer song, except with trap adlibs (i.e. gunshots, airhorns, "DAMN SON WHERE'D
 YOU FIND THIS!?").  Since this was reddit, this request was obviously [quickly

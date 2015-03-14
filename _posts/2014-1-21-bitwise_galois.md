@@ -40,22 +40,22 @@ of, and a relatively simple explanation of what it did.  Based on that and
 using my rudimentary knowledge of bitwise operators in python, I was able to
 line-by-line annotate the code with the purpose of each line.
 
-To understand line 4, "if b & 1", we must first understand three things:
+To understand line 4, `if b & 1`, we must first understand three things:
 
 1:  When given a number as a conditional, python evaluates true if that number
     does not equal 0 and false if it does.
 
-2:  & represents bitwise and in python
+2:  `&` represents bitwise and in python
 
 3:  In python, binary numbers are treated like integers, so
-    0b1 == 0b01 == 0b001, and therefore n & 0b1 == n & 0b001.
+    `0b1 == 0b01 == 0b001`, and therefore `n & 0b1 == n & 0b001`.
 
 Hence, the if statement first essentially performs a bitwise and on the binary
-representation of b and a binary number of equal length consisting of zeroes in
+representation of `b` and a binary number of equal length consisting of zeroes in
 all but the least significant place and a one in that place and then checks if
 the result is not equal to zero.  All this does is executes the code inside the
-'if' if the least significant bit of b is one.  Simplifying further, we can see
-that the conditional just checks if b is odd, albeit in a faster and less
+`if` if the least significant bit of `b` is one.  Simplifying further, we can see
+that the conditional just checks if `b` is odd, albeit in a faster and less
 easily comprehensible way.
 
 The line inside the if statement is much easier to understand.  In python ^=

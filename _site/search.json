@@ -49,14 +49,6 @@
     } ,
   
     {
-      "title"    : "A Personal Update",
-      "category" : "",
-      "tags"     : "personal, and miscellaneous",
-      "url"      : "/2014/02/22/update/",
-      "date"     : "2014-02-22 00:00:00 -0600"
-    } ,
-  
-    {
       "title"    : "Things I Learned Writing Trapifier.py",
       "category" : "",
       "tags"     : "",

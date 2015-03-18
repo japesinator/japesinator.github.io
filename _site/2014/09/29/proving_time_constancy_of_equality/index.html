@@ -49,9 +49,7 @@
 <span class="time">29 Sep 2014</span>
 
 <div class="content">
-	<div class="post"><h1>Proving Time-Constancy of Equality</h1>
-
-<p>Lately I&#39;ve been working with <a href="http://www.idris-lang.org/">idris</a> a bunch.
+	<div class="post"><p>Lately I&#39;ve been working with <a href="http://www.idris-lang.org/">idris</a> a bunch.
 Idris is a purely functional, dependently-typed, programming language, which,
 to quote one of my friends, makes it &quot;Haskell for Haskell people.&quot; There are a
 lot of things that it does well, but one of the most interesting ones is that
@@ -63,7 +61,8 @@ the variables of those types.  For example:</p>
 <span class="lineno">2</span> <span class="kt">S</span> left <span class="ow">=</span> <span class="kt">S</span> right
 <span class="lineno">3</span> eqSucc left <span class="kr">_</span> refl <span class="ow">=</span> refl</code></pre></div>
 
-<p>The above is a function taken from idris&#39; <a href="https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude">prelude</a>,
+<p>The above is a function taken from idris&#39;
+<a href="https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude">prelude</a>,
 which is the standard library that contains most of the basic functions and
 proofs.  It states that if you have two natural numbers and a proof that they
 are equal, the successor to the first is equal to the successor to the second,

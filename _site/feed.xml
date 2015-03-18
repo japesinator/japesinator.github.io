@@ -8,9 +8,7 @@
                 
                         <item>
                                 <title>As Little Technology as Possible</title>
-                                <description>&lt;h1&gt;As Little Technology as Possible&lt;/h1&gt;
-
-&lt;h2&gt;&lt;em&gt;or&lt;/em&gt; How to Turn a Pathological Hatred of Technology Into a Hackathon Victory&lt;/h2&gt;
+                                <description>&lt;h2&gt;&lt;em&gt;or&lt;/em&gt; How to Turn a Pathological Hatred of Technology Into a Hackathon Victory&lt;/h2&gt;
 
 &lt;p&gt;This past weekend, my friend and I went to
 &lt;a href=&quot;http://www.hackillinois.org/&quot;&gt;HackIllinois&lt;/a&gt; in search of fame, glory, and
@@ -112,9 +110,7 @@ three github repos.&lt;/p&gt;
                 
                         <item>
                                 <title>Let&#39;s Write a Monad in Idris!</title>
-                                <description>&lt;h1&gt;Let&amp;#39;s Write a Monad in Idris!&lt;/h1&gt;
-
-&lt;p&gt;To preface this, I&amp;#39;m not writing another monad tutorial.  There&amp;#39;s a
+                                <description>&lt;p&gt;To preface this, I&amp;#39;m not writing another monad tutorial.  There&amp;#39;s a
 (not-too-far-from-the-truth) stereotype that every Haskell programmer writes
 their own terrible monad tutorial that I do not intend to perpetuate, and if
 you really want to learn monads, I would recommend first reading the excellent
@@ -246,9 +242,7 @@ instance of &lt;code&gt;Functor&lt;/code&gt;.&lt;/p&gt;
                 
                         <item>
                                 <title>Stacked Type Signatures</title>
-                                <description>&lt;h1&gt;Stacked Type Signatures&lt;/h1&gt;
-
-&lt;p&gt;In general, I greatly prefer programming in functional, strongly-typed
+                                <description>&lt;p&gt;In general, I greatly prefer programming in functional, strongly-typed
 languages.  I&amp;#39;m currently working on &lt;a href=&quot;https://github.com/Lopi/HackMan&quot;&gt;a
 project&lt;/a&gt; in &lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;, &lt;a href=&quot;https://github.com/japesinator/tarts&quot;&gt;a
 project&lt;/a&gt; in
@@ -317,9 +311,7 @@ a function, I personally find the former much more legible.&lt;/p&gt;
                 
                         <item>
                                 <title>Types as Tests</title>
-                                <description>&lt;h1&gt;Types as Tests&lt;/h1&gt;
-
-&lt;p&gt;Recently, a friend of mine and I were going over the ages old tests vs. types
+                                <description>&lt;p&gt;Recently, a friend of mine and I were going over the ages old tests vs. types
 debate.  Specifically, if a programmer wants to have some degree of certainty
 that their program will function as intended, does it work better to use unit
 testing or static typing?  However, the more I looked at the argument we were
@@ -406,9 +398,7 @@ ensuring program correctness.&lt;/p&gt;
                 
                         <item>
                                 <title>A Tale of Two Alls</title>
-                                <description>&lt;h1&gt;A Tale of Two Alls&lt;/h1&gt;
-
-&lt;p&gt;One of my favorite parts of programming in strongly typed languages is the
+                                <description>&lt;p&gt;One of my favorite parts of programming in strongly typed languages is the
  ability to use the type signature of a function to figure out what it does.
  For instance, &lt;code&gt;:t map&lt;/code&gt; returns either &lt;code&gt;map :: (a -&amp;gt; b) -&amp;gt; [a] -&amp;gt; [b]&lt;/code&gt; in
  Haskell, or &lt;code&gt;Prelude.Functor.map : Functor f =&amp;gt; (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b&lt;/code&gt; in
@@ -591,9 +581,7 @@ mine&lt;/a&gt; I
                 
                         <item>
                                 <title>Proving Time-Constancy of Equality</title>
-                                <description>&lt;h1&gt;Proving Time-Constancy of Equality&lt;/h1&gt;
-
-&lt;p&gt;Lately I&amp;#39;ve been working with &lt;a href=&quot;http://www.idris-lang.org/&quot;&gt;idris&lt;/a&gt; a bunch.
+                                <description>&lt;p&gt;Lately I&amp;#39;ve been working with &lt;a href=&quot;http://www.idris-lang.org/&quot;&gt;idris&lt;/a&gt; a bunch.
 Idris is a purely functional, dependently-typed, programming language, which,
 to quote one of my friends, makes it &amp;quot;Haskell for Haskell people.&amp;quot; There are a
 lot of things that it does well, but one of the most interesting ones is that
@@ -605,7 +593,8 @@ the variables of those types.  For example:&lt;/p&gt;
 &lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S&lt;/span&gt; left &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S&lt;/span&gt; right
 &lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; eqSucc left &lt;span class=&quot;kr&quot;&gt;_&lt;/span&gt; refl &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; refl&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The above is a function taken from idris&amp;#39; &lt;a href=&quot;https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude&quot;&gt;prelude&lt;/a&gt;,
+&lt;p&gt;The above is a function taken from idris&amp;#39;
+&lt;a href=&quot;https://github.com/idris-lang/Idris-dev/tree/master/libs/prelude/Prelude&quot;&gt;prelude&lt;/a&gt;,
 which is the standard library that contains most of the basic functions and
 proofs.  It states that if you have two natural numbers and a proof that they
 are equal, the successor to the first is equal to the successor to the second,
@@ -731,47 +720,8 @@ that&amp;#39;s actually really important.&lt;/p&gt;
                         </item>
                 
                         <item>
-                                <title>A Personal Update</title>
-                                <description>&lt;h1&gt;A Personal Update&lt;/h1&gt;
-
-&lt;p&gt;I don&amp;#39;t mean to become the person from &lt;a href=&quot;https://xkcd.com/621/&quot;&gt;the XKCD&lt;/a&gt;, but I
-will apologize for not posting much lately.  I&amp;#39;ve been really busy with a few
-projects which I hope to post about soon, but in short:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;On the Boy Scouting front, I&amp;#39;m now director of STEM at &lt;a href=&quot;http://isrsummercamp.org/&quot;&gt;Ingersoll Scout
-Reservation&lt;/a&gt;. Since this is a new area this year,
-I&amp;#39;m designing a bunch of material to teach important things but still be as
-accessible as possible to people without much high school math or even
-electricity.  I&amp;#39;m now Vice Chief of Administration for &lt;a href=&quot;http://wq23.org/&quot;&gt;Wenasa Quenhotan
-Lodge&lt;/a&gt;, so I&amp;#39;ll be managing some financial things and
-setting up some new technology&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;On the academic side of things, I&amp;#39;ve been working on a project to produce
-a paper about UAVs.  I&amp;#39;ll probably be working on implementing some crypto
-that can resist both smart attackers with fast computers and the kind of
-packet loss you get when your only communication method is wireless to a
-drone 100 meters in the air.  Also, I&amp;#39;ve been doing a bunch of stuff with
-&lt;a href=&quot;isusec.com&quot;&gt;ISUSec&lt;/a&gt;, where I&amp;#39;ve been presenting about crypto and reverse
-engineering.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;On the personal side of things, I&amp;#39;ve been taking a couple courses at
-&lt;a href=&quot;http://coursera.org&quot;&gt;Coursera&lt;/a&gt; in Cryptography and Machine Learning, and
-have been writing a tic-tac-toe AI and a (somewhat) R5RS compliant scheme in
-Haskell.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;So essentially, I&amp;#39;ve been really busy, but for good reasons, and I&amp;#39;ll post more
-soon.&lt;/p&gt;
-</description>
-                                <pubDate>Sat, 22 Feb 2014 00:00:00 -0600</pubDate>
-                                <link>http://japesinator.github.io//2014/02/22/update/</link>
-                                <guid isPermaLink="true">http://japesinator.github.io//2014/02/22/update/</guid>
-                        </item>
-                
-                        <item>
                                 <title>Things I Learned Writing Trapifier.py</title>
-                                <description>&lt;h1&gt;Things I Learned Writing Trapifier.py&lt;/h1&gt;
-
-&lt;p&gt;Recently on reddit.com/r/hiphopheads, someone requested that a cover of a John
+                                <description>&lt;p&gt;Recently on reddit.com/r/hiphopheads, someone requested that a cover of a John
 Mayer song, except with trap adlibs (i.e. gunshots, airhorns, &amp;quot;DAMN SON WHERE&amp;#39;D
 YOU FIND THIS!?&amp;quot;).  Since this was reddit, this request was obviously &lt;a href=&quot;http://www.reddit.com/r/hiphopheads/comments/1vxdag/guys_i_need_a_favor/cewq9ao&quot;&gt;quickly
 fulfilled&lt;/a&gt;
@@ -860,20 +810,18 @@ things I had done in a while.&lt;/p&gt;
                 
                         <item>
                                 <title>On Set</title>
-                                <description>&lt;h1&gt;On Set&lt;/h1&gt;
-
-&lt;p&gt;For those not familiar, &lt;a href=&quot;https://en.wikipedia.org/wiki/Set_%28game%29&quot;&gt;Set&lt;/a&gt; is
-a relatively simple board game played in real time by assembling &amp;quot;sets&amp;quot; of
+                                <description>&lt;p&gt;For those not familiar, &lt;a href=&quot;https://en.wikipedia.org/wiki/Set_%28game%29&quot;&gt;Set&lt;/a&gt; is
+a relatively simple board game played in real time by assembling &amp;quot;Sets&amp;quot; of
 cards.  Each card in the game has four attributes (shape, color, number, and
 filling) which can each be any of three different values ((oval, squiggle, or
 diamond), (red, blue, or green), (one, two, or three), and (empty, shaded, or
-full), respectively).  A &amp;quot;set&amp;quot; is only valid if for each attribute, each of the
-three cards in the set either has the same value or no two cards have the same
+full), respectively).  A &amp;quot;Set&amp;quot; is only valid if for each attribute, each of the
+three cards in the Set either has the same value or no two cards have the same
 value.  For instance, one solid red diamond, two shaded blue ovals, and three
-empty green squiggles would make a set because no two cards share an attribute.
+empty green squiggles would make a Set because no two cards share an attribute.
 One solid red oval, two solid red ovals, and three solid red ovals are also a
-set because they all have the same filling, color, and shape, but they all have
-a different number.  In general, a set has no &lt;em&gt;pairs&lt;/em&gt; of attributes, just
+Set because they all have the same filling, color, and shape, but they all have
+a different number.  In general, a Set has no &lt;em&gt;pairs&lt;/em&gt; of attributes, just
 triplets or uniques.&lt;/p&gt;
 
 &lt;p&gt;For this reason, cards lend themselves to representation as a four-element
@@ -883,15 +831,15 @@ The only question is whether to use standard ternary or &lt;a href=&quot;https:/
 ternary&lt;/a&gt;.  While balanced
 ternary has a number of computational advantages, for our purposes, standard
 0-1-2 ternary actually allows us some computational shortcuts.  Firstly, a
-function to find out whether a given triplet of cards is a set, which would
+function to find out whether a given triplet of cards is a Set, which would
 normally be horrendously ugly and check for any possible pair of matching
 values with no triplet can instead be written as below.  Note that the sum
 function, which cleans up the code a bit, would not always work with balanced
 ternary.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;is_set&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;is_Set&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;is_set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card2&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;is_Set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card2&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(`&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zipWith&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zipWith&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;True&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;-- First we sum the numbers in each card mod 3, and then we sum the numbers in that array&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;-- This can only result in zero if the array is [0,0,0,0]&lt;/span&gt;
@@ -901,47 +849,47 @@ ternary.&lt;/p&gt;
 unreadable, but with a little analysis it is both clear and elegant.  Given
 three lists, it creates a new list where each element is the sum of the
 elements in the same place in the original list modulo three, then checks if
-that list is entirely zeroes by summing it. So given [a,b,c,d], [e,f,g,h], and
-[i,j,k,l], if (a + e + i) % 3 + (b + f + j) % 3 + (c + g + k) % 3 + (d + h + l)
-% 3 == 0, it returns true.  Otherwise, it returns false.  This works because 3n
-% 3 == 0 while n is any number and (0 + 1 + 2) % 3 == 0, but (2n + m) % 3 != 0
-while 0 &amp;lt;= n, m &amp;lt;= 2.&lt;/p&gt;
+that list is entirely zeroes by summing it. So given &lt;code&gt;[a,b,c,d]&lt;/code&gt;, &lt;code&gt;[e,f,g,h]&lt;/code&gt;,
+and &lt;code&gt;[i,j,k,l]&lt;/code&gt;, if &lt;code&gt;(a + e + i) % 3 + (b + f + j) % 3 + (c + g + k) % 3 + (d +
+h + l) % 3 == 0&lt;/code&gt;, it returns true.  Otherwise, it returns false.  This works
+because &lt;code&gt;3n % 3 == 0&lt;/code&gt; while &lt;code&gt;n&lt;/code&gt; is any number and &lt;code&gt;(0 + 1 + 2) % 3 == 0&lt;/code&gt;, but
+&lt;code&gt;(2n + m) % 3 != 0&lt;/code&gt; while &lt;code&gt;0 &amp;lt;= n, m &amp;lt;= 2&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Another interesting problem is the number of total sets.  This can be
+&lt;p&gt;Another interesting problem is the number of total Sets.  This can be
 approached from a number of different ways.  Perhaps the most intuitive is by
-looking at the number of possible sets in a game with only one attribute, a
+looking at the number of possible Sets in a game with only one attribute, a
 game with only two attributes, and so on onto a game of four attributes.  While
 perhaps the most mathematically &amp;quot;pure&amp;quot; method, this is also challenging and an
 unnecessary amount of work.  Instead, we can rely on the modulo arithmetic
-discussed above.  Since a set is only valid when the sum mod 3 of its
+discussed above.  Since a Set is only valid when the sum mod 3 of its
 attributes represented numerically is 0, given two attributes we can deduce the
-value of the third necessary to complete the set.  There will also be only one
+value of the third necessary to complete the Set.  There will also be only one
 value between zero and two that works, so a pair of attributes implies a unique
-third to have a valid set.  This means that any pair of cards implies a unique
-third card that completes a set with them.&lt;/p&gt;
+third to have a valid Set.  This means that any pair of cards implies a unique
+third card that completes a Set with them.&lt;/p&gt;
 
-&lt;p&gt;The naive interpretation of this is that the number of possible sets is equal
+&lt;p&gt;The naive interpretation of this is that the number of possible Sets is equal
 to the number of possible pairs, but that forgets that a group of three cards
 contains three different pairs ((0,1), (1,2), (0,2)), and that each pair can be
-revealed one of two ways.  Thus, the number of possible sets is equal to the
+revealed one of two ways.  Thus, the number of possible Sets is equal to the
 number of possible pairs divided by three times two.  Since there are 81 cards,
-the total number of possible sets is (81 * 80) / (3 * 2), which is the same as
+the total number of possible Sets is (81 * 80) / (3 * 2), which is the same as
 (27 * 40), which is 1080.  This also means that drawing two cards off of a
-fresh deck, there is only one card in the deck that forms a set with them, so
-the odds that three random cards form a set is one over the number of cards in
+fresh deck, there is only one card in the deck that forms a Set with them, so
+the odds that three random cards form a Set is one over the number of cards in
 the deck minus two, or 1/79.  Wikipedia confirms these numbers if not the
 reasoning behind them.  This even solves our earlier problem about the number
-of possible sets in a game with n attributes, because the only thing in our
+of possible Sets in a game with n attributes, because the only thing in our
 math that changes with a different number of attributes is the deck size, which
-is now equal to 3^n.  Thus, the number of possible sets in a game with n
+is now equal to 3^n.  Thus, the number of possible Sets in a game with n
 attributes, assuming there is exactly one card for every combination of
 attributes, is (3^n * (3^n -1)) / (6), which simplifies to (3^(2n -1) -
 3^(n-1)) / 2.&lt;/p&gt;
 
-&lt;p&gt;Also interesting is the actual playing of set.  If we want to write a program
-to analyze an array of cards and select sets from it, we have an huge selection
+&lt;p&gt;Also interesting is the actual playing of Set.  If we want to write a program
+to analyze an array of cards and select Sets from it, we have an huge selection
 of options.  Perhaps the most tempting is just to create a list comprehension
-that looks at every triplet of cards and checks if it is a valid set.  This
+that looks at every triplet of cards and checks if it is a valid Set.  This
 would be easy to implement, but would have something like O(n^3) runtime
 because it runs its large, complex operation for every possible triple of
 cards, which, if there are n cards, means that it runs (n)(n-1)(n-2) times.
@@ -960,7 +908,7 @@ searching for it.  Code to do that is shown below.&lt;/p&gt;
 performed a bit less than n^2 times, while the computationally cheap comparison
 takes up the rest of the cycles.  Working this into actual code, we can see an
 improvement of almost n - 2 times, where n is the number of cards we are
-analyzing.  Below is a four-line program to get a set from a given group of
+analyzing.  Below is a four-line program to get a Set from a given group of
 cards.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cards&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bunch&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;four&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
@@ -969,12 +917,12 @@ cards.&lt;/p&gt;
 &lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- This is just a type definition.  It&amp;#39;s a bit like declaring variables with types is a C like language.&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_third_card&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card1&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zipWith&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(`&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zipWith&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;card1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- The third card will sum with the first two to [0, 0, 0, 0] mod 3, see code above for why&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt;  &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_third_card&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- The set found is just the first from the list of valid sets.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Set&lt;/span&gt;  &lt;span class=&quot;ow&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cards&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_third_card&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;-- The Set found is just the first from the list of valid Sets.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;One of the reasons I love Haskell is that it&amp;#39;s possible to write an AI for a
 complex board game in four relatively simple lines of code, and that the way
-the algorithm plays set is more or less the same way I do.&lt;/p&gt;
+the algorithm plays Set is more or less the same way I do.&lt;/p&gt;
 </description>
                                 <pubDate>Thu, 23 Jan 2014 00:00:00 -0600</pubDate>
                                 <link>http://japesinator.github.io//2014/01/23/on_set/</link>
@@ -983,9 +931,7 @@ the algorithm plays set is more or less the same way I do.&lt;/p&gt;
                 
                         <item>
                                 <title>Bitwise Galois Arithmetic</title>
-                                <description>&lt;h1&gt;Bitwise Galois Arithmetic&lt;/h1&gt;
-
-&lt;p&gt;Recently, I began working on implementing AES in python.  My code is largely
+                                <description>&lt;p&gt;Recently, I began working on implementing AES in python.  My code is largely
 based off of &lt;a href=&quot;https://code.google.com/p/slowaes/&quot;&gt;SlowAES&lt;/a&gt;, but using much more
 in-depth comments, more descriptive variable names, and snake case.  I
 understood most of the code, but there was a function for performing &amp;quot;Galois
@@ -1017,54 +963,55 @@ of, and a relatively simple explanation of what it did.  Based on that and
 using my rudimentary knowledge of bitwise operators in python, I was able to
 line-by-line annotate the code with the purpose of each line.&lt;/p&gt;
 
-&lt;p&gt;To understand line 4, &amp;quot;if b &amp;amp; 1&amp;quot;, we must first understand three things:&lt;/p&gt;
+&lt;p&gt;To understand line 4, &lt;code&gt;if b &amp;amp; 1&lt;/code&gt;, we must first understand three things:&lt;/p&gt;
 
 &lt;p&gt;1:  When given a number as a conditional, python evaluates true if that number
     does not equal 0 and false if it does.&lt;/p&gt;
 
-&lt;p&gt;2:  &amp;amp; represents bitwise and in python&lt;/p&gt;
+&lt;p&gt;2:  &lt;code&gt;&amp;amp;&lt;/code&gt; represents bitwise and in python&lt;/p&gt;
 
 &lt;p&gt;3:  In python, binary numbers are treated like integers, so
-    0b1 == 0b01 == 0b001, and therefore n &amp;amp; 0b1 == n &amp;amp; 0b001.&lt;/p&gt;
+    &lt;code&gt;0b1 == 0b01 == 0b001&lt;/code&gt;, and therefore &lt;code&gt;n &amp;amp; 0b1 == n &amp;amp; 0b001&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Hence, the if statement first essentially performs a bitwise and on the binary
-representation of b and a binary number of equal length consisting of zeroes in
-all but the least significant place and a one in that place and then checks if
-the result is not equal to zero.  All this does is executes the code inside the
-&amp;#39;if&amp;#39; if the least significant bit of b is one.  Simplifying further, we can see
-that the conditional just checks if b is odd, albeit in a faster and less
-easily comprehensible way.&lt;/p&gt;
+representation of &lt;code&gt;b&lt;/code&gt; and a binary number of equal length consisting of zeroes
+in all but the least significant place and a one in that place and then checks
+if the result is not equal to zero.  All this does is executes the code inside
+the &lt;code&gt;if&lt;/code&gt; if the least significant bit of &lt;code&gt;b&lt;/code&gt; is one.  Simplifying further, we
+can see that the conditional just checks if &lt;code&gt;b&lt;/code&gt; is odd, albeit in a faster and
+less easily comprehensible way.&lt;/p&gt;
 
-&lt;p&gt;The line inside the if statement is much easier to understand.  In python ^=
-is similar to += in that a ^= b is the same as a = a ^ b.  ^ is the bitwise xor
-function, so all that this line does is xors p with a.&lt;/p&gt;
+&lt;p&gt;The line inside the if statement is much easier to understand.  In python &lt;code&gt;^=&lt;/code&gt;
+is similar to &lt;code&gt;+=&lt;/code&gt; in that &lt;code&gt;a ^= b&lt;/code&gt; is the same as &lt;code&gt;a = a ^ b&lt;/code&gt;.  ^ is the
+bitwise xor function, so all that this line does is xors &lt;code&gt;p&lt;/code&gt; with &lt;code&gt;a.&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The next line, &amp;quot;hi&lt;em&gt;bit&lt;/em&gt;set = a &amp;amp; 0x80&amp;quot; is again, an application of python&amp;#39;s
+&lt;p&gt;The next line, &lt;code&gt;hi_bit_set = a &amp;amp; 0x80&lt;/code&gt; is again, an application of python&amp;#39;s
 bitwise and to perform an operation quickly, but in a way that is hard to
 deduce from the code.  Converting 0x80 to decimal and then to binary we find
-that 0x80 == 128 == 0b10000000.  Bitwise and of any number with zero is zero,
-so our output will return 0b10000000 if a has a 1 in the 128&amp;#39;s place and 0
+that &lt;code&gt;0x80 == 128 == 0b10000000&lt;/code&gt;.  Bitwise and of any number with zero is zero,
+so our output will return &lt;code&gt;0b10000000&lt;/code&gt; if &lt;code&gt;a&lt;/code&gt; has a 1 in the 128&amp;#39;s place and 0
 otherwise.  This is important at line 11, which checks whether this bit was set
 earlier.&lt;/p&gt;
 
-&lt;p&gt;Now that we have checked whether a&amp;#39;s highest bit was set, we can modify it with
-a &amp;lt;&amp;lt;=1, which simply shifts each bit to the right and adds a zero to the end,
-or in decimal, multiplies a by 2.&lt;/p&gt;
+&lt;p&gt;Now that we have checked whether &lt;code&gt;a&lt;/code&gt;&amp;#39;s highest bit was set, we can modify it
+with &lt;code&gt;a &amp;lt;&amp;lt;=1&lt;/code&gt;, which simply shifts each bit to the right and adds a zero to the
+end, or in decimal, multiplies &lt;code&gt;a&lt;/code&gt; by 2.&lt;/p&gt;
 
-&lt;p&gt;Line 8 took me a while to understand the purpose of. 0xFF == 0b11111111, and if
-n is any bit, n &amp;amp; 1 == 1, so at first is looked to me like this line did not
-even modify a.  However, this is the same trick as used in line 4.  Applying a
-bitwise and to a number and a string of ones n bits long truncates that number
-to its least significant n bits.  Line 8 therefore makes sure that a is only 8
-bits long after a left bitshift that could make it longer than that.&lt;/p&gt;
+&lt;p&gt;Line 8 took me a while to understand the purpose of. &lt;code&gt;0xFF == 0b11111111&lt;/code&gt;, and
+if &lt;code&gt;n&lt;/code&gt; is any bit, &lt;code&gt;n &amp;amp; 1 == 1&lt;/code&gt;, so at first is looked to me like this line did
+not even modify &lt;code&gt;a&lt;/code&gt;.  However, this is the same trick as used in line 4.
+Applying a bitwise and to a number and a string of ones n bits long truncates
+that number to its least significant n bits.  Line 8 therefore makes sure that
+&lt;code&gt;a&lt;/code&gt; is only 8 bits long after a left bitshift that could make it longer than
+that.&lt;/p&gt;
 
 &lt;p&gt;In the next line, we use the high-bit-set test we devised before to see if a
-was &amp;gt;= 128 prior to our bitshift and truncation.  If it was, we xor a with
-0x1b. 0x1b == 27 == 0b00011011, which has no easily apparent special
+was &amp;gt;= 128 prior to our bitshift and truncation.  If it was, we xor &lt;code&gt;a&lt;/code&gt; with
+&lt;code&gt;0x1b.&lt;/code&gt; &lt;code&gt;0x1b == 27 == 0b00011011&lt;/code&gt;, which has no easily apparent special
 properties, and only makes sense in the context of the actual math the function
 is based upon.&lt;/p&gt;
 
-&lt;p&gt;After the second conditional has been evaluated, we shift b to the right one
+&lt;p&gt;After the second conditional has been evaluated, we shift &lt;code&gt;b&lt;/code&gt; to the right one
 bit, essentially dropping the least significant bit and then dividing it by
 two.  We repeat this 8 times, and we have our function.&lt;/p&gt;
 
@@ -1111,7 +1058,7 @@ reverse.&lt;/p&gt;
 &lt;p&gt;We might expect that since Galois arithmetic is analogous to our own
 arithmetic, Galois multiplication is simply repeated Galois addition.  However,
 since Galois addition of two numbers is actually equivalent to simply bitwise
-xoring them, and (a ^ b) ^ b == a, Galois-adding two numbers together any
+xoring them, and &lt;code&gt;(a ^ b) ^ b == a&lt;/code&gt;, Galois-adding two numbers together any
 number of times can only result in two values.  &lt;a href=&quot;http://www.pclviewer.com/rs2/galois.html&quot;&gt;This
 website&lt;/a&gt;, offers a fairly good
 explanation of exactly what Galois field arithmetic is and how to do it, and it
@@ -1135,7 +1082,7 @@ the number 1365, I have written the equivalent of the polynomial 1x^3 + 3x^2 +
 
 &lt;p&gt;In AES&amp;#39;s finite field, numbers are expressed as binary, so that base is two.
 The irreducible polynomial that defines the field is actually 283, or
-0b100011011.  Notably, 0b100011011 % 256 (or 0b10000000) = 0b11011 (or 27)
+&lt;code&gt;0b100011011.&lt;/code&gt;  Notably, &lt;code&gt;0b100011011 % 256 (or 0b10000000) = 0b11011&lt;/code&gt; (or 27)
 which at least partially explains where the mysterious constant in line 10
 comes from.  Thus, when we want to multiply in a Galois field, we can simply
 multiply our two numbers like usual and then take the result modulo 283.  This
@@ -1165,7 +1112,7 @@ set of simpler instructions:&lt;/p&gt;
 &lt;p&gt;5:  Repeat until b is 0&lt;/p&gt;
 
 &lt;p&gt;This is simpler, but still far removed from our normal concept of
-multiplication until we look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Multiplication_algorithm#Peasant_or_binary_multiplication&quot;&gt;Peasant 
+multiplication until we look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Multiplication_algorithm#Peasant_or_binary_multiplication&quot;&gt;Peasant
 Multiplication&lt;/a&gt;.
 Expressed as a series of steps, peasant multiplication is:&lt;/p&gt;
 

@@ -35,7 +35,8 @@ at best, but a quick google search for "mix audio in python" turned up
 [pydub](http://pydub.com/), which ended up solving pretty much all my audio
 problems at once.  Later, when I was trying to make it work well from the
 command line and failing miserably to get optional arguments to work like I
-wanted, another google search turned up [argparse](http://docs.python.org/dev/library/argparse.html),
+wanted, another google search turned up
+[argparse](http://docs.python.org/dev/library/argparse.html),
 which might be the single most useful python library I've seen since os.
 
 *   Computer-timed isn't always better than random
@@ -56,7 +57,7 @@ r/hiphopheads is surprisingly high.  While there were some comments along the
 lines of "You go to MIT?!?!" (because I MIT licensed the code) and "Super dope
 script bruh. Algorithmically this is some e=mc2 shit," there were also a
 surprising number of helpful comments about the actual code and what to do with
-it.  People talked about refactoring code and using os.path.join for more
+it.  People talked about refactoring code and using `os.path.join` for more
 cross-compatibility and generally gave helpful advice about the design of the
 program, something I did not see coming from where it did.
 

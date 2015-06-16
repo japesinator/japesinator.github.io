@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Circle City Con CTF Writeup",
+      "category" : "",
+      "tags"     : "writeup",
+      "url"      : "/2015/06/15/cccc_writeup/",
+      "date"     : "2015-06-15 00:00:00 -0500"
+    } ,
+  
+    {
       "title"    : "As Little Technology as Possible",
       "category" : "",
       "tags"     : "writeup",

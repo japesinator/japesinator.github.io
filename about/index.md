@@ -8,7 +8,7 @@ About Me
 
 * My name is JP.
 
-* I go to highschool and a little bit of college in a medium-sized town in the midwest.
+* I go to school and occasionally work in places generally around the Midwest.
 
 * I like math, computers, music, the outdoors, physics, and a bunch of other things, some of which I write about.
 

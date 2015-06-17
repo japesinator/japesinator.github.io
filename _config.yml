@@ -8,7 +8,7 @@ encoding: UTF-8
 markdown: redcarpet
 highlighter: pygments
 github: www.github.com/japesinator
-about: I am a high school student in the midwest who likes math, computers, and other interesting things
+about: I am an almost college student in the midwest who likes math, computers, and other interesting things
 urls:
     - text: github
       url: https://github.com/japesinator

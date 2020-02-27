@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+html{background:#202020;}
+
+body{
+    padding:0;
+    margin:0;
+    font-family: 'Vollkorn', serif;
+    font-weight:100;
+    z-index:0;
+    margin: 0 auto;
+    height:100%;
+    width: 100%;
+}
+
+a { cursor: pointer; text-decoration:none; color: #fff; }
+
+#content {
+    position: relative;
+    top:10vh;
+    margin-bottom: 30vh;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+p {
+    font-size: 1.3rem;
+    line-height: 2.5rem;
+    color: #eee;
+    margin: 0 auto;
+    text-indent: 40px; 
+    padding-bottom: 20px;
+}
+
+a {
+    color: #7F9F7F;
+}
+
+@media screen and (max-width: 560px) {
+    
+    body { padding: 40px; }
+}
+
+footer {
+    margin-top:100px;
+    margin-bottom:100px;
+}
+

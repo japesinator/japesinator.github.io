@@ -1,12 +1,32 @@
----
-layout: default
----
-
-<div id="home">
-  <h1>Blog Posts</h1>
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-</div>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset='utf-8'>
+        <title>JP Smith</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <meta name="author" content="JP Smith"/>
+        <meta http-equiv="content-language" content="en"/>
+        <link href='http://fonts.googleapis.com/css?<a class="external family" href="https://www.instagram.com/thesheelyfamily/?hl=en" target="blank">family</a>=Vollkorn' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?<a class="external family" href="https://www.instagram.com/thesheelyfamily/?hl=en" target="blank">family</a>=Open+Sans:400,700' rel='stylesheet' type='text/css'/>
+        <link href='plain_text.css' rel='stylesheet' type='text/css'/>
+    </head>
+    <body>
+        <div id="content">
+            <!-- First Paragraph -->
+            <div class="main">
+                <p>
+                    <span>Hi, I'm JP Smith. I'm a security researcher and software engineer based in New York City. I love problems in cryptography, program analysis, and software engineering.</span>
+                </p>
+                <p>
+                    <span>I've worked on a lot of fun and interesting projects. From <a href="https://github.com/UnderhandedCrypto/entries/tree/master/2017/JPSmith">post-quantum backdoors</a> to <a href="https://github.com/japesinator/EQUANIMITY3000">generative adversarial networks for cryptography</a> to <a href="https://github.com/NeuroTechX/ntx_slack_archive/blob/master/devices.md">low-cost transcranial direct current stimulation devices</a>. If you'd like to see more of my research, it's more or less entirely on my <a href="https://github.com/japesinator">Github</a>. I also <a href="https://twitter.com/japesinator">tweet</a> a lot of it (among other things).</span>
+                </p>
+                <p>
+                    <span>If you'd like to get in touch, feel free to shoot me an <a href=mailto:jp@writes.co.de>email</a>, or use the aforementioned twitter.</span>
+                </p>
+            </div>
+        </div>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    </body>
+</html>
